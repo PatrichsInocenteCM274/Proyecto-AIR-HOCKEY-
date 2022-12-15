@@ -1,6 +1,8 @@
 # Proyecto AIR HOCKEY
 
-<iframe width="600" height = "420"
-src="
-https://user-images.githubusercontent.com/30361234/207958982-062a2d1e-3e5d-4926-bcb9-7c1c102701c6.mp4">
-</iframe>
+ ##### Others
+ <p align="left"> 
+ <a href="https://firebase.google.com/" target="_blank"> <img src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" alt="firebase" width="65" height="65"/> </a>
+<a href="https://postman.com" target="_blank"> <img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="postman" width="65" height="65"/> </a>
+<a href="https://git-scm.com/" target="_blank"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="65" height="65"/>  </a>
+  </p>
