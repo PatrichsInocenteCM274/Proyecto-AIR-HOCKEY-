@@ -35,7 +35,7 @@ python3 td3_.py --scara=left
 ~~~
 
 ### Modo demo:
-[![tabler.png](https://i.postimg.cc/Gh6N9PVm/tabler.png)](https://postimg.cc/8jBw0vT2)
+[![tabler.png](https://i.postimg.cc/Gh6N9PVm/tabler.png)](https://postimg.cc/8jBw0vT2)  
 Podemos observar el tablero con identificadores de coordenadas (Se abrirá una pantalla GUI), para poder comprender como los datos trabajan internamente, escribiendo en consola:
 ~~~
 python3 demo.py --scara=left  
