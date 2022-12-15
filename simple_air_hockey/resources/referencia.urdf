@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<robot name="disco">
+
+  <material name="red">
+    <color rgba="1 0.0 0.0 1"/>
+  </material>
+
+  <material name="gris">
+    <color rgba="0.8 0.8 0.702 1"/>
+  </material>
+
+  <material name="blue_sky">
+    <color rgba="0 1 1 1"/>
+  </material>
+
+  <link name="contact_surface">
+    <visual>
+      <geometry>
+        <cylinder length="0.17" radius="0.45"/>  <!--Por estetica he ocultado esta superficie, pero si existe como objeto de colision-->
+      </geometry>
+      <material name="red"/>
+    </visual>
+  </link>
+
+</robot>

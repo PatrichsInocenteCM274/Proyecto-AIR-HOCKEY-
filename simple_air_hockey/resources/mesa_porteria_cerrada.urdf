@@ -1,0 +1,562 @@
+<?xml version="1.0"?>
+<robot name="mesa">
+
+  <material name="black">
+    <color rgba="0 0 0 1"/>
+  </material>                 
+
+  <material name="blue">
+    <color rgba="0.1 0.1 0.44 1"/>
+  </material>
+
+  <material name="gris">
+    <color rgba="0.80 0.80 0.80 1"/>
+  </material>     
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="11 16 0.1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="11 16 0.1"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="1.0" ixz="1.0" iyy="1.0" iyz="1.0" izz="1.0"/>
+    </inertial>
+    <contact> 
+            <lateral_friction value="0"/>
+            <restitution value="0.0" />
+    </contact>
+
+  </link>
+
+  <link name="leg_1">
+    <visual>
+      <geometry>
+        <cylinder length="2" radius="0.3"/>
+        
+      </geometry>
+      <origin rpy="0 0 0" xyz="4.9 -6.5 -1.0"/> 
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="2" radius="0.3"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="4.9 -6.5 -1.0"/> 
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <link name="leg_2">
+    <visual>
+      <geometry>
+        <cylinder length="2" radius="0.3"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="4.9 6.5 -1.0"/>  
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+       <cylinder length="2" radius="0.3"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="4.9 6.5 -1.0"/>  
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+    
+  </link>
+
+  <link name="leg_3">
+    <visual>
+      <geometry>
+        <cylinder length="2" radius="0.3"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="-4.9 -6.5 -1.0"/> 
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="2" radius="0.3"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="-4.9 -6.5 -1.0"/>  
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <link name="leg_4">
+    <visual>
+      <geometry>
+        <cylinder length="2" radius="0.3"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="-4.9 6.5 -1.0"/>  
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="2" radius="0.3"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="-4.9 6.5 -1.0"/>  
+    </collision>   
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial> 
+  </link>
+
+
+  <link name="wall_leg1_leg4">
+    <visual>
+      <geometry>
+        <box size="9.5 0.3 1.8"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 6.5 -0.95"/>  
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+       <box size="9.5 0.3 1.8"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 6.5 -0.95"/>  
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+    
+  </link>
+
+
+  <link name="wall_leg2_leg3">
+    <visual>
+      <geometry>
+        <box size="9.5 0.3 1.8"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 -6.5 -0.95"/>  
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+       <box size="9.5 0.3 1.8"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 -6.5 -0.95"/>  
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <link name="side_wall_1">
+    <visual>
+      <geometry>
+        <box size="0.56 1.5 17.8"/>
+      </geometry>
+      <origin rpy="1.570796 0 0" xyz="5.75 0.0 -0.25"/>  
+      <material name="gris"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.56 1.5 17.8"/>
+      </geometry>
+      <origin rpy="1.570796 0 0" xyz="5.75 0.0 -0.25"/>  
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+    <contact> 
+            <lateral_friction value="0"/>
+            <restitution value="1.15" />
+    </contact>
+  </link>
+
+  <link name="side_wall_2">
+    <visual>
+      <geometry>
+        <box size="0.56 1.5 17.8"/>
+      </geometry>
+      <origin rpy="1.570796 0 0" xyz="-5.75 0.0 -0.25"/>  
+      <material name="gris"/>
+    </visual> 
+    <collision>
+      <geometry>
+        <box size="0.56 1 17.8"/>
+      </geometry>
+      <origin rpy="1.570796 0 0" xyz="-5.75 0.0 -0.25"/>  
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+    <contact> 
+            <lateral_friction value="0"/>
+            <restitution value="1.15" />
+    </contact>
+  </link>
+
+  <link name="side_wall_3_1">
+    <visual>
+      <geometry>
+        <box size="1.5 1 4.28"/>
+      </geometry>
+      <origin rpy="0 1.570796 0" xyz="-3.33 -8.39 -0.25"/>  
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="1.5 1 4.28"/>
+      </geometry>
+      <origin rpy="0 1.570796 0" xyz="-3.33 -8.39 -0.25"/>  
+      <material name="blue"/>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+    <contact> 
+            <lateral_friction value="0"/>
+            <restitution value="1.15" />
+    </contact>
+  </link>
+
+  <link name="side_wall_3_2">
+    <visual>
+      <geometry>
+        <box size="1.5 1 4.28"/>
+      </geometry>
+      <origin rpy="0 1.570796 0" xyz="3.33 -8.39 -0.25"/>  
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="1.5 1 4.28"/>
+      </geometry>
+      <origin rpy="0 1.570796 0" xyz="3.33 -8.39 -0.25"/>  
+      <material name="blue"/>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+    <contact> 
+            <lateral_friction value="0"/>
+            <restitution value="1.15" />
+    </contact>
+  </link>
+
+  <link name="side_wall_3_3">
+    <visual>
+      <geometry>
+        <box size="0.20 1 2.4"/>
+      </geometry>
+      <origin rpy="0 1.570796 0" xyz="0. -8.39 0.40"/>  
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.20 1.0 2.4"/>
+      </geometry>
+      <origin rpy="0 1.570796 0" xyz="0. -8.39 0.40"/>  
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+    <contact> 
+            <lateral_friction value="0"/>
+            <restitution value="1.15" />
+    </contact>
+  </link>
+
+  <link name="side_wall_3_4">
+    <visual>
+      <geometry>
+        <box size="1.0 1 2.4"/>
+      </geometry>
+      <origin rpy="0 1.570796 0" xyz="0. -8.39 -0.5"/>  
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="1.0 1 2.4"/>
+      </geometry>
+      <origin rpy="0 1.570796 0" xyz="0. -8.39 -0.5"/>  
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+    <contact> 
+            <lateral_friction value="0"/>
+            <restitution value="1.15" />
+    </contact>
+  </link>
+
+  <link name="side_wall_4_1">
+    <visual>
+      <geometry>
+        <box size="1.5 1.0 4.28"/>
+      </geometry>
+      <origin rpy="0 1.570796 0" xyz="-3.33 8.39 -0.25"/>  
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="1.5 1.0 4.28"/>
+      </geometry>
+      <origin rpy="0 1.570796 0" xyz="-3.33 8.39 -0.25"/>  
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+    <contact> 
+            <lateral_friction value="0"/>
+            <restitution value="1.15" />
+    </contact>
+  </link>
+
+  <link name="side_wall_4_2">
+    <visual>
+      <geometry>
+        <box size="1.5 1.0 4.28"/>
+      </geometry>
+      <origin rpy="0 1.570796 0" xyz="3.33 8.39 -0.25"/>  
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="1.5 1.0 4.28"/>
+      </geometry>
+      <origin rpy="0 1.570796 0" xyz="3.33 8.39 -0.25"/>  
+      <material name="blue"/>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+    <contact> 
+            <lateral_friction value="0"/>
+            <restitution value="1.15" />
+    </contact>
+  </link>
+
+  <link name="side_wall_4_3">
+    <visual>
+      <geometry>
+        <box size="0.2 1.0 2.4"/>
+      </geometry>
+      <origin rpy="0 1.570796 0" xyz="0. 8.39 0.40"/>  
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.2 1.0 2.4"/>
+      </geometry>
+      <origin rpy="0 1.570796 0" xyz="0. 8.39 0.40"/>  
+      <material name="blue"/>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+        <contact> 
+            <lateral_friction value="0"/>
+            <restitution value="1.15" />
+    </contact>
+  </link>
+
+  <link name="side_wall_4_4">
+    <visual>
+      <geometry>
+        <box size="1.0 1.0 2.4"/>
+      </geometry>
+      <origin rpy="0 1.570796 0" xyz="0. 8.39 -0.5"/>  
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="1.0 1.0 2.4"/>
+      </geometry>
+      <origin rpy="0 1.570796 0" xyz="0. 8.39 -0.5"/>  
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+    <contact> 
+            <lateral_friction value="0"/>
+            <restitution value="1.15" />
+    </contact>
+  </link>
+
+  <link name="limit_right">
+    <visual>
+      <geometry>
+        <box size="0 0 0"/>
+      </geometry>
+      <origin rpy="0 1.570796 0" xyz="0. 9.5 0.0"/>  
+    </visual>
+    <collision>
+      <geometry>
+        <box size="1.0 1.0 2.4"/>
+      </geometry>
+      <origin rpy="0 1.570796 0" xyz="0. 9.5 0.0"/>  
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+    <contact> 
+            <lateral_friction value="0"/>
+            <restitution value="0.5" />
+    </contact>
+  </link>
+
+  <link name="limit_left">
+    <visual>
+      <geometry>
+        <box size="1.0 1.0 2.4"/>
+      </geometry>
+      <origin rpy="0 1.570796 0" xyz="0. -8.39 0.0"/>  
+    </visual>
+    <collision>
+      <geometry>
+        <box size="1.0 1.0 2.4"/>
+      </geometry>
+      <origin rpy="0 1.570796 0" xyz="0. -8.39 0.0"/>  
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+    <contact> 
+            <lateral_friction value="0"/>
+            <restitution value="1.15" />
+    </contact>
+  </link>
+
+  <joint name="base_to_leg_1" type="fixed">
+    <parent link="base_link"/>
+    <child link="leg_1"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <joint name="base_to_leg_2" type="fixed">
+    <parent link="base_link"/>
+    <child link="leg_2"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <joint name="base_to_leg_3" type="fixed">
+    <parent link="base_link"/>
+    <child link="leg_3"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <joint name="base_to_leg_4" type="fixed">
+    <parent link="base_link"/>
+    <child link="leg_4"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <joint name="base_to_wall_leg1_leg4" type="fixed">
+    <parent link="base_link"/>
+    <child link="wall_leg1_leg4"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <joint name="base_to_wall_leg2_leg3" type="fixed">
+    <parent link="base_link"/>
+    <child link="wall_leg2_leg3"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <joint name="base_to_side_wall_1" type="fixed">
+    <parent link="base_link"/>
+    <child link="side_wall_1"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <joint name="base_to_side_wall_2" type="fixed">
+    <parent link="base_link"/>
+    <child link="side_wall_2"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <joint name="base_to_side_wall_3_1" type="fixed">
+    <parent link="base_link"/>
+    <child link="side_wall_3_1"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <joint name="base_to_side_wall_3_2" type="fixed">
+    <parent link="base_link"/>
+    <child link="side_wall_3_2"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <joint name="base_to_side_wall_3_3" type="fixed">
+    <parent link="base_link"/>
+    <child link="side_wall_3_3"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <joint name="base_to_side_wall_3_4" type="fixed">
+    <parent link="base_link"/>
+    <child link="side_wall_3_4"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <joint name="base_to_side_wall_4_1" type="fixed">
+    <parent link="base_link"/>
+    <child link="side_wall_4_1"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <joint name="base_to_side_wall_4_2" type="fixed">
+    <parent link="base_link"/>
+    <child link="side_wall_4_2"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <joint name="base_to_side_wall_4_3" type="fixed">
+    <parent link="base_link"/>
+    <child link="side_wall_4_3"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <joint name="base_to_side_wall_4_4" type="fixed">
+    <parent link="base_link"/>
+    <child link="side_wall_4_4"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  
+
+  <joint name="base_to_limit_left" type="fixed">
+    <parent link="base_link"/>
+    <child link="limit_left"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <joint name="base_to_limit_right" type="fixed">
+    <parent link="base_link"/>
+    <child link="limit_right"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+</robot>
