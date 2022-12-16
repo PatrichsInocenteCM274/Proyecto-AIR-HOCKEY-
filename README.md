@@ -24,11 +24,11 @@ https://user-images.githubusercontent.com/30361234/207985457-98500e54-a050-4212-
 
 
 ##### 4. Para capturar grabaciones del entrenamiento de cada robot scara, escribir:  
-En el caso de querer grabación de scara derecha:  
+En el caso de querer obtener la grabación de scara derecha:  
 ~~~
 python3 td3_inferencia.py --scara=right  
 ~~~
-En el caso de querer grabación de scara izquierda:  
+En el caso de querer obtener la grabación de scara izquierda:  
 ~~~
 python3 td3_inferencia.py --scara=left  
 ~~~
