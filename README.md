@@ -15,12 +15,22 @@ https://user-images.githubusercontent.com/30361234/208005553-9cb6a1f3-f142-403e-
 ~~~
 pip install -e .
 ~~~
-##### 3. Para mostrar el juego entre dos agentes TD3 jugando Air Hockey (Abrirá una pantalla GUI), escribir el siguiente comando en consola:  
+##### 3.1. Para mostrar el juego entre dos agentes TD3 jugando Air Hockey (Abrirá una pantalla GUI), escribir el siguiente comando en consola:  
 ~~~
-python3 td3_inferencia.py --scara=all  
+python3 td3_inferencia.py --scara=all --models=1
 ~~~
 
-https://user-images.githubusercontent.com/30361234/207985457-98500e54-a050-4212-9dad-729dae587071.mp4
+
+https://user-images.githubusercontent.com/30361234/208436447-3d8b593d-879e-40b0-a0dc-867ae80af3f8.mp4
+
+
+
+##### 3.2. Para mostrar el juego entre TD3 Y ddpg jugando Air Hockey (Abrirá una pantalla GUI), escribir el siguiente comando en consola:  
+~~~
+python3 td3_inferencia.py --scara=all --models=2
+~~~
+
+https://user-images.githubusercontent.com/30361234/208436476-b9fe48ae-4d40-4fad-96a8-29592c0ea0a2.mp4
 
 
 ##### 4. Para capturar grabaciones del entrenamiento de cada robot scara, escribir:  
