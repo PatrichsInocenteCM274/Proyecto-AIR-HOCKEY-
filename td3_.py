@@ -69,7 +69,7 @@ class ReplayBuffer(object):
     self.ptr = 0
 
   def add(self, transition):
-    if len(self.storage)== self.max_size: ####OJO, en el vídeo ponía MAX_STORAGE!!!
+    if len(self.storage)== self.max_size: 
       self.storage[int(self.ptr)] = transition
       self.ptr = (self.ptr + 1) % self.max_size
     else:
