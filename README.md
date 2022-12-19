@@ -51,7 +51,7 @@ Para entrenar la scara izquierda con TD3, escribimos:
 ~~~
 python3 td3_.py --scara=left  
 ~~~
-##### 5. Para entrenar solo scara izquierda con modelo DDPG desde cero:  
+Para entrenar solo scara izquierda con modelo DDPG desde cero:  
 ~~~
 python3 ddpg_train_scara_left.py
 ~~~
