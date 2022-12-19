@@ -77,8 +77,8 @@ class SimpleAirHockeyEnv(gym.Env):
             self.scara_right.apply_action(action_right)
             self.scara_left.apply_action(action_left)
         
-        if not self.mode_GAME:
-            p.stepSimulation()
+        
+        p.stepSimulation()
         disco_ob = self.disco.get_observation() 
         reward = 0
 
@@ -311,13 +311,11 @@ class SimpleAirHockeyEnv(gym.Env):
         if self.init:
             if self.mode_GAME:
                 self.client = p.connect(p.GUI)
-                p.setRealTimeSimulation(1)
+                p.setTimeStep(1/240, self.client)  
             else:
                 self.client = p.connect(p.DIRECT)
                 p.setTimeStep(self.timestep, self.client)                
             self.init = False
-        #p.resetSimulation(self.client)
-        p.setRealTimeSimulation(1)
         p.setGravity(0, 0.0, -10)
         self.done = False
         self.choque=False
