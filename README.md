@@ -25,7 +25,7 @@ https://user-images.githubusercontent.com/30361234/208436447-3d8b593d-879e-40b0-
 
 
 
-##### 3.2. Para mostrar el juego entre TD3 Y ddpg jugando Air Hockey (Abrirá una pantalla GUI), escribir el siguiente comando en consola:  
+##### 3.2. Para mostrar el juego entre TD3 Y DDPG jugando Air Hockey (Abrirá una pantalla GUI), escribir el siguiente comando en consola:  
 ~~~
 python3 td3_inferencia.py --scara=all --models=2
 ~~~
