@@ -6,7 +6,7 @@ from numpy import interp
 
 class Score:
     
-    def __init__(self, client, models):
+    def __init__(self, client, models=1):
         self.client = client
         score = os.path.join(os.path.dirname(__file__), 'score.urdf')
         table_score = os.path.join(os.path.dirname(__file__), 'table_score.urdf')
