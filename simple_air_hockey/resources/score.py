@@ -6,12 +6,13 @@ from numpy import interp
 
 class Score:
     
-    def __init__(self, client):
+    def __init__(self, client, models):
         self.client = client
         score = os.path.join(os.path.dirname(__file__), 'score.urdf')
         table_score = os.path.join(os.path.dirname(__file__), 'table_score.urdf')
-        self.f_image_competitors_td3_ppo = os.path.join(os.path.dirname(__file__), 'td3_ppo.png')
+        self.f_image_competitors_td3_td3 = os.path.join(os.path.dirname(__file__), 'td3_td3.png')
         self.f_image_competitors_td3_ddpg = os.path.join(os.path.dirname(__file__), 'td3_ddpg.png')
+        self.models = models
 
         self.table_score1 = p.loadURDF(table_score,
                               [0.0, -1.1, 8.5],
@@ -56,7 +57,10 @@ class Score:
             f_number_image_player2 = os.path.join(os.path.dirname(__file__), str(player2_score)+'.png')
             self.number_score_player1 = p.loadTexture(textureFilename=f_number_image_player1,physicsClientId=self.client)
             self.number_score_player2 = p.loadTexture(textureFilename=f_number_image_player2,physicsClientId=self.client)
-            self.competitors = p.loadTexture(textureFilename=self.f_image_competitors_td3_ddpg,physicsClientId=self.client)
+            if self.models == 1:
+                self.competitors = p.loadTexture(textureFilename=self.f_image_competitors_td3_td3,physicsClientId=self.client)
+            else:
+                self.competitors = p.loadTexture(textureFilename=self.f_image_competitors_td3_ddpg,physicsClientId=self.client)
             p.changeVisualShape(self.score1,-1,textureUniqueId = self.number_score_player1, physicsClientId=self.client )    
             p.changeVisualShape(self.score2,-1,textureUniqueId = self.number_score_player2, physicsClientId=self.client )       
             p.changeVisualShape(self.score3,-1,textureUniqueId = self.number_score_player1, physicsClientId=self.client )    

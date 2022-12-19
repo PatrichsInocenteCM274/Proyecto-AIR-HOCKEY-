@@ -58,6 +58,7 @@ class SimpleAirHockeyEnv(gym.Env):
         self.observacion_right = None
         self.observacion_left = None
         self.winner = False
+        self.models = 1
         
     def set_mode(self, mode_GAME):
         self.mode_GAME = mode_GAME
@@ -301,6 +302,9 @@ class SimpleAirHockeyEnv(gym.Env):
     def change_score(self):
         self.score = [0,0]
 
+    def set_models(self,nro_models):
+        self.models = nro_models
+
     def reset(self, scara = 'right'):
         if not self.init:
             p.resetSimulation(self.client)
@@ -320,7 +324,7 @@ class SimpleAirHockeyEnv(gym.Env):
         self.choque_pared_enemiga = False
         self.choque_pared_aliada = False
         self.step_golpe_disco = 0        
-        score = Score(self.client)
+        score = Score(self.client,self.models)
         score.change_score(self.score_right,self.score_left)
         floor = Floor(self.client)
         mesa = Mesa(self.client)

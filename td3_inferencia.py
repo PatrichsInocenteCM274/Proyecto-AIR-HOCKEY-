@@ -20,6 +20,7 @@ from IPython.display import display
 import cv2
 import argparse
 import warnings
+import DDPG
 warnings.filterwarnings("ignore")
 
 class Actor(nn.Module):
@@ -179,9 +180,13 @@ if __name__ == "__main__":
   parser.add_argument("--mode", default="") # "" por defecto no usara la GUI, "game" usara GUI    
   parser.add_argument("--scara", default="right")  # "right" mostrará solo scara derecha, "left" mostrará solo scara izquierda
                                                    # "all" mostrará ambas scaras por GUI
+  parser.add_argument("--models", default=1, type=int)    # "1" solo modelo td3 para ambas scaras
+                                                  # "2" scara left con modelo ddpg y scara right con modelo td3 
+                                                   
   args = parser.parse_args()
   mode = args.mode
   scara = args.scara
+  models = args.models
   env_name = "SimpleAirHockey-v0"
   seed = 0
 
@@ -194,6 +199,8 @@ if __name__ == "__main__":
   save_env_vid = False
 
   env = gym.make(env_name)
+  if models == 2:
+    env.set_models(2)
   if mode == "game" or scara == "all":
     env.set_mode(True)
 
@@ -211,6 +218,16 @@ if __name__ == "__main__":
     policy_right = TD3(state_dim, action_dim, max_action)
     policy_right.load(file_name, './pytorch_models',scara="right")
   if scara == "left" or scara == "all":
-    policy_left = TD3(state_dim, action_dim, max_action)
-    policy_left.load(file_name, './pytorch_models',scara="left")
+    if models == 2:
+      print ("---------------------------------------")
+      print("Enfrentamiento de Modelo DDPG con TD3")
+      print ("---------------------------------------")
+      policy_left = DDPG.DDPG(state_dim, action_dim, max_action)
+      policy_left.load(f"./models/DDPG_SimpleAirHockey-v0_0")
+    else:
+      print ("---------------------------------------")
+      print("Enfrentamiento de Modelo TD3 con TD3")
+      print ("---------------------------------------")
+      policy_left = TD3(state_dim, action_dim, max_action)
+      policy_left.load(file_name, './pytorch_models',scara="left")
   evaluate_policy(policy_right,policy_left, eval_episodes=eval_episodes)
