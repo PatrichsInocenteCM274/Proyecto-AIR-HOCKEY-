@@ -43,13 +43,17 @@ En el caso de querer obtener la grabación de scara izquierda:
 python3 td3_inferencia.py --scara=left  
 ~~~
 ##### 5. Para entrenar cada scara desde cero:  
-Para entrenar la scara derecha, escribimos:  
+Para entrenar la scara derecha con TD3, escribimos:  
 ~~~
 python3 td3_.py --scara=right  
 ~~~
-Para entrenar la scara izquierda, escribimos:  
+Para entrenar la scara izquierda con TD3, escribimos:  
 ~~~
 python3 td3_.py --scara=left  
+~~~
+##### 5. Para entrenar solo scara izquierda con modelo DDPG desde cero:  
+~~~
+python3 ddpg_train_scara_left.py
 ~~~
 
 ### Modo demo:
