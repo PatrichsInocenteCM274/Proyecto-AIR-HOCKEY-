@@ -67,11 +67,15 @@ python3 demo.py
 
 ### Métricas de Entrenamiento:
 Para observar el progreso del entrenamiento, se ha preparado un gráfico para cada robot scara, donde se muestra el progreso en una ventana de 100 episodios, para ver escribir en consola:
-##### Para ver métrica de la scara derecha:
+##### Para visualizar métrica de la scara derecha:
 ~~~
 python3 visualiza.py --scara=right
 ~~~
-##### Para ver métrica de la scara Izquierda:
+##### Para visualizar métrica de la scara Izquierda:
 ~~~
 python3 visualiza.py --scara=left
+~~~
+##### Para visualizar comparativa de TD3 vs DDPG en la scara Izquierda:
+~~~
+python3 visualiza.py --scara=left --models=2
 ~~~
