@@ -61,7 +61,9 @@ python3 ddpg_train_scara_left.py
 ~~~
 
 ### Modo demo:
-[![tabler.png](https://i.postimg.cc/Gh6N9PVm/tabler.png)](https://postimg.cc/8jBw0vT2)  
+
+![demo](https://user-images.githubusercontent.com/30361234/208746819-afee8982-7e1b-4e3d-9518-023f67dc32e1.png)
+
 Podemos observar el tablero con identificadores de coordenadas (Se abrirá una pantalla GUI), para poder comprender como los datos trabajan internamente, escribiendo en consola:
 ~~~
 python3 demo.py 
