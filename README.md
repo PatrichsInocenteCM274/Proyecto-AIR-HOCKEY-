@@ -22,7 +22,10 @@ python3 td3_inferencia.py --scara=all --models=1
 ~~~
 
 
-https://user-images.githubusercontent.com/30361234/208436447-3d8b593d-879e-40b0-a0dc-867ae80af3f8.mp4
+
+
+https://user-images.githubusercontent.com/30361234/208745597-156dc360-4461-4b2e-8075-a0e5c7fbcb0b.mp4
+
 
 
 
