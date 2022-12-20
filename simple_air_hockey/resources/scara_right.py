@@ -74,11 +74,11 @@ class ScaraR:
     def cinematica_inversa(self,action):
         px,py,self.velocity_servo,self.velocity_efector = action
 
-        px = max(min(px, 1), -1)
-        px = interp(px,[-1,1],[-4.70,4.70])
+        #px = max(min(px, 1), -1)
+        #px = interp(px,[-1,1],[-4.70,4.70])
 
-        py = max(min(py, 1), -1)
-        py = interp(py,[-1,1],[3.15,7.40])
+        #py = max(min(py, 1), -1)
+        #py = interp(py,[-1,1],[3.15,7.40])
 
         self.velocity_servo = max(min(self.velocity_servo, 1), -1)
         self.velocity_servo = interp(self.velocity_servo,[-1,1],[0,5.0])
@@ -111,4 +111,3 @@ class ScaraR:
                                 targetPosition=angle_efector,
                                 maxVelocity= self.velocity_efector,
                                 physicsClientId=self.client) 
-
