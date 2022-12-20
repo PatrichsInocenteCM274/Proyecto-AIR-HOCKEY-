@@ -10,11 +10,11 @@ https://user-images.githubusercontent.com/30361234/208005553-9cb6a1f3-f142-403e-
 ### Controles en Pybullet:
 Es importante que al momento de interactuar con el entorno pybullet, podamos rotar, desplarnos y manipular los objetos, por ello adjunto una pequeña guía de los mas importantes controles de teclado y mouse disponible:
 
-- Scroll Mouse hacia abajo/arriba: Zoom In/out de la escena.
-- Ctrl + keep Click + Desplazar mouse: Rotación de la escena.
-- Ctrl + Mouse Left + Mouse Right + Desplazar mouse: Movimiento paralelo en la escena.
-- Tecla G: Retira o muestra las ventanas de Depuración.
-- Keep Click + Desplazar mouse: Manipula y mueve objetos.
+- **Scroll Mouse hacia abajo/arriba:** Zoom In/out de la escena.
+- **Ctrl + keep Click + Desplazar mouse:** Rotación de la escena.
+- **Ctrl + Mouse Left + Mouse Right + Desplazar mouse:** Movimiento paralelo en la escena.
+- **Tecla G:** Retira o muestra las ventanas de Depuración.
+- **Keep Click + Desplazar mouse:** Manipula y mueve objetos.
 
 
 ### Instrucciones de Uso:
