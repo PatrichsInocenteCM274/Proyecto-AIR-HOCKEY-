@@ -62,7 +62,7 @@ python3 ddpg_train_scara_left.py
 
 ### Modo demo:
 
-![demo](https://user-images.githubusercontent.com/30361234/208746819-afee8982-7e1b-4e3d-9518-023f67dc32e1.png)
+<img src="https://user-images.githubusercontent.com/30361234/208746819-afee8982-7e1b-4e3d-9518-023f67dc32e1.png" width="720" height="600">
 
 Podemos observar el tablero con identificadores de coordenadas (Se abrirá una pantalla GUI), para poder comprender como los datos trabajan internamente, escribiendo en consola:
 ~~~
