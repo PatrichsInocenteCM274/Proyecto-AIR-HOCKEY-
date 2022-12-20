@@ -74,11 +74,11 @@ class ScaraL:
     def cinematica_inversa(self,action):
         px,py,self.velocity_servo,self.velocity_efector = action
 
-        px = max(min(px, 1), -1)
-        px = interp(px,[-1,1],[-4.70,4.70])
+        #px = max(min(px, 1), -1)
+        #px = interp(px,[-1,1],[-4.70,4.70])
 
-        py = max(min(py, 1), -1)
-        py = interp(py,[-1,1],[-3.15,-7.40])
+        #py = max(min(py, 1), -1)
+        #py = interp(py,[-1,1],[-3.15,-7.40])
 
         self.velocity_servo = max(min(self.velocity_servo, 1), -1)
         self.velocity_servo = interp(self.velocity_servo,[-1,1],[0,5.0])
@@ -86,10 +86,10 @@ class ScaraL:
         self.velocity_efector = max(min(self.velocity_efector, 1), -1)
         self.velocity_efector = interp(self.velocity_efector,[-1,1],[0,5.0])
 
-        pos, ang = p.getBasePositionAndOrientation(self.scara_right, self.client)
+        pos, ang = p.getBasePositionAndOrientation(self.scara_left, self.client)
         pos = pos[:2]
-        px = (px-pos[0])
-        py = -(py-pos[1])
+        px = -(px-pos[0])
+        py = (py-pos[1])
         r_limit = 2.15+2.899
         r_current = math.sqrt(px**2+py**2)
         
@@ -100,13 +100,13 @@ class ScaraL:
         angle_efector = math.acos((px**2+py**2-2.15**2-2.9**2)/(2*2.15*2.9))
         angle_servo = np.arctan2(px,py) - np.arctan2((2.15*math.sin(angle_efector)),(2.9+2.15*math.cos(angle_efector))) 
 
-        p.setJointMotorControl2(self.scara_right,self.servos_joints[0],
+        p.setJointMotorControl2(self.scara_left,self.servos_joints[0],
                                 p.POSITION_CONTROL,
                                 targetPosition=angle_servo,
                                 maxVelocity= self.velocity_servo ,
                                 physicsClientId=self.client)   
 
-        p.setJointMotorControl2(self.scara_right,self.servos_joints[1],
+        p.setJointMotorControl2(self.scara_left,self.servos_joints[1],
                                 p.POSITION_CONTROL,
                                 targetPosition=angle_efector,
                                 maxVelocity= self.velocity_efector,
