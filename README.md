@@ -7,6 +7,14 @@ El aprendizage de los agentes se ha logrado mediante el aprendizaje TD3 (Twin de
 
 https://user-images.githubusercontent.com/30361234/208005553-9cb6a1f3-f142-403e-b957-4182b9c3076e.mp4
 
+### Controles en Pybullet:
+Es importante que al momento de interactuar con el entorno pybullet, podamos rotar, desplarnos y manipular los objetos, por ello adjunto una pequeña guía de los mas importantes controles de teclado y mouse disponible:
+
+- Scroll Mouse hacia abajo/arriba: Zoom In/out de la escena.
+- Ctrl + keep Click + Desplazar mouse: Rotación de la escena.
+- Ctrl + Mouse Left + Mouse Right + Desplazar mouse: Movimiento paralelo en la escena.
+- Tecla G: Retira o muestra las ventanas de Depuración.
+- Keep Click + Desplazar mouse: Manipula y mueve objetos.
 
 
 ### Instrucciones de Uso:
@@ -62,7 +70,9 @@ python3 ddpg_train_scara_left.py
 
 ### Modo demo:
 
-<img src="https://user-images.githubusercontent.com/30361234/208746819-afee8982-7e1b-4e3d-9518-023f67dc32e1.png" width="720" height="600">
+
+https://user-images.githubusercontent.com/30361234/208754050-1c7c75ca-9b21-420a-b6f8-21ddcff7ee80.mp4
+
 
 Podemos observar el tablero con identificadores de coordenadas (Se abrirá una pantalla GUI), para poder comprender como los datos trabajan internamente, escribiendo en consola:
 ~~~
