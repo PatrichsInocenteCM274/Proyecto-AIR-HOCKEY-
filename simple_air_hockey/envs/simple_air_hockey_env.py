@@ -427,37 +427,19 @@ class SimpleAirHockeyEnv(gym.Env):
         self.score.change_score(self.score_right,self.score_left)
         self.scara_left = ScaraL(self.client,7.0)
         c_directa = p.addUserDebugParameter(" Cinematica directa",1,0,1)
-        self.scara_right_angle_servo_base = p.addUserDebugParameter(' Scara Right Servo Base', -1, 1, -0.4)
-        self.scara_right_angle_servo_efector = p.addUserDebugParameter(' Scara Right Servo Efector', -1, 1, -0.2)
-        self.scara_left_angle_servo_base = p.addUserDebugParameter(' Scara Left Servo Base', -1, 1,-0.4)
-        self.scara_left_angle_servo_efector = p.addUserDebugParameter(' Scara Left Servo Efector', -1, 1, -0.2)
+        self.scara_right_angle_servo_base = p.addUserDebugParameter(' Scara Right Servo Base', -1, 1, 0)
+        self.scara_right_angle_servo_efector = p.addUserDebugParameter(' Scara Right Servo Efector', -1, 1, 0)
+        self.scara_left_angle_servo_base = p.addUserDebugParameter(' Scara Left Servo Base', -1, 1, 0)
+        self.scara_left_angle_servo_efector = p.addUserDebugParameter(' Scara Left Servo Efector', -1, 1, 0)
         c_inversa = p.addUserDebugParameter(" Cinematica inversa",1,0,1)
-        px_right = p.addUserDebugParameter(' posicion x', -3, 3, -0.3)
-        py_right = p.addUserDebugParameter(' posicion y',3.15, 7,5.0)
-        px_left = p.addUserDebugParameter(' posicion x', -3, 3, -0.3)
-        py_left = p.addUserDebugParameter(' posicion y', -7, -3.15, -5)
+        px_right = p.addUserDebugParameter(' posicion x Scara Right', -4.70,4.70, 0)
+        py_right = p.addUserDebugParameter(' posicion y Scara Right', 3.15, 7.40, 3.15)
+        px_left = p.addUserDebugParameter(' posicion x Scara Left', -4.70,4.70, 0)
+        py_left = p.addUserDebugParameter(' posicion y Scara Left', -7.40, -3.15, -3.15)
         
         sleep(1.0)
-        #posx = -0.30
-        #posy = 5.17
-        #mouseEvents = p.getMouseEvents()
-        #for e in mouseEvents:
-        #    prev_e1 = e[1]
-        #    prev_e2 = e[2]
         camera = 0
         while True:
-            '''
-            mouseEvents = p.getMouseEvents()
-            for e in mouseEvents:
-                posx += (prev_e1-e[1])/70
-                posy -= (prev_e2-e[2])/70
-                prev_e1 = e[1]
-                prev_e2 = e[2]
-                print("1",posx,posy)'''
-            
-            
-            #p.resetDebugVisualizerCamera( cameraDistance=12, cameraYaw=camera, cameraPitch=-35, cameraTargetPosition=[0,0,3.0])
-            #camera += 0.0005
             
             angle_servo_scara_right = p.readUserDebugParameter(self.scara_right_angle_servo_base)
             angle_efector_scara_right = p.readUserDebugParameter(self.scara_right_angle_servo_efector)
@@ -472,8 +454,8 @@ class SimpleAirHockeyEnv(gym.Env):
                 textSize=1,
                 lifeTime=0.1,
                 )
-                self.scara_right.apply_action([angle_servo_scara_right,angle_efector_scara_right,7.0,7.0])
-                self.scara_left.apply_action([angle_servo_scara_left,angle_efector_scara_left,7.0,7.0])
+                self.scara_right.apply_action([angle_servo_scara_right,angle_efector_scara_right,1.0,1.0])
+                self.scara_left.apply_action([angle_servo_scara_left,angle_efector_scara_left,1.0,1.0])
 
 
             pos_px_right = p.readUserDebugParameter(px_right)
@@ -488,8 +470,8 @@ class SimpleAirHockeyEnv(gym.Env):
                 textSize=1,
                 lifeTime=0.1,
                 )
-                self.scara_right.cinematica_inversa(pos_px_right,pos_py_right)
-                self.scara_left.cinematica_inversa(pos_px_left,pos_py_left)
+                self.scara_right.cinematica_inversa([pos_px_right,pos_py_right,1.0,1.0])
+                self.scara_left.cinematica_inversa([pos_px_left,pos_py_left,1.0,1.0])
             
             scara_left_ob = self.scara_left.get_observation()
             scara_right_ob = self.scara_right.get_observation()
@@ -523,7 +505,7 @@ class SimpleAirHockeyEnv(gym.Env):
                 lifeTime=0.1,
             )
             
-            #sleep(0.0005)
+            
             
 
     def close(self):
