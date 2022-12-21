@@ -8,7 +8,7 @@ El aprendizage de los agentes se ha logrado mediante el aprendizaje TD3 (Twin de
 https://user-images.githubusercontent.com/30361234/208005553-9cb6a1f3-f142-403e-b957-4182b9c3076e.mp4
 
 ### Controles en Pybullet:
-Es importante que al momento de interactuar con el entorno pybullet, podamos rotar, desplarnos y manipular los objetos, por ello adjunto una pequeña guía de los mas importantes controles de teclado y mouse disponible:
+Es importante que al momento de interactuar con el entorno pybullet, podamos rotar, desplazarnos y manipular los objetos, por ello adjunto una pequeña guía de los mas importantes controles de teclado y mouse disponible:
 
 - **Scroll Mouse hacia abajo/arriba:** Zoom In/out de la escena.
 - **Ctrl + keep Click + Desplazar mouse:** Rotación de la escena.
