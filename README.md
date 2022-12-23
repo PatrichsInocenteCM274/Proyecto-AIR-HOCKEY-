@@ -1,7 +1,7 @@
 # Proyecto AIR HOCKEY en PyBullet
 
 Este proyecto tuvo como objetivo crear un entorno de Gimnasio en pybullet desde cero con la finalidad de entrenar dos agentes y enseñarles a jugar Air Hockey, los agentes robóticos son scaras de 2 grados de libertad que poseen un mazo en su efector final.  
-El aprendizage de los agentes se ha logrado mediante el aprendizaje TD3 (Twin delayed DDPG) cuya codificación oficial e investigación son proveidos en el repositorio oficial del equipo creador del Modelo TD3 https://github.com/sfujim/TD3. Para los fines de este proyecto, la codificación de TD3 en python en la que me he basado y modificado se puede obtener al completar el curso de UDEMY "Aprendizaje por Refuerzo Profundo 2.0 en Python" --> https://www.udemy.com/course/aprendizaje-por-refuerzo-profundo/, el cual completé y recomiendo absolutamente.  
+El aprendizage de los agentes se ha logrado mediante el aprendizaje TD3 (Twin delayed DDPG) cuya codificación oficial e investigación son proveidos en el repositorio oficial del equipo creador del Modelo TD3 https://github.com/sfujim/TD3. Para los fines de este proyecto, la codificación de TD3 en python en la que me he basado es parte del curso de UDEMY "Aprendizaje por Refuerzo Profundo 2.0 en Python" --> https://www.udemy.com/course/aprendizaje-por-refuerzo-profundo/, el cual completé y recomiendo absolutamente.  
 Además de ello, se ha hecho una comparativa de TD3 versus DDPG (Antecesor de TD3), podrá observarlo al final de este documento.
 
 
