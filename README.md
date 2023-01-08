@@ -43,7 +43,7 @@ Para entrenar solo scara izquierda con modelo DDPG desde cero:
 !python3 ddpg_train_scara_left.py
 ~~~
 
-##### 2. Para capturar grabaciones del entrenamiento de cada robot scara, escribir:  
+##### 2. Para capturar grabaciones del entrenamiento de cada robot scara (los videos se almacenarán en la carpeta del proyecto), escribir:  
 En el caso de querer obtener la grabación de scara derecha:  
 ~~~
 !python3 td3_inferencia.py --scara=right  
