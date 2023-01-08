@@ -34,7 +34,7 @@ class ScaraL:
         self.angle_servo,self.angle_efector,self.velocity_servo,self.velocity_efector = action
 
         self.angle_servo = max(min(self.angle_servo, 1), -1)
-        self.angle_servo = interp(self.angle_servo,[-1,1],[-2.9,2.9])
+        self.angle_servo = interp(self.angle_servo,[-1,1],[-2.0,2.0])
 
         self.angle_efector = max(min(self.angle_efector, 1), -1)
         self.angle_efector = interp(self.angle_efector,[-1,1],[-2.9,2.9])
