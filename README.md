@@ -20,12 +20,51 @@ Es importante que al momento de interactuar con el entorno pybullet, podamos rot
 
 ### Instrucciones de Uso:
 
-##### 1. Clonar el repositorio y ubicarnos dentro del repositorio localmente.  
-##### 2. De ser posible en un entorno virtual, cargar las dependencias del proyecto mediante el comando:
+#### EN COLAB
+
+Los procesos de entrenamiento y visualización de videos se harán en colab para no repercutir en gastos computacionales de nuestra maquina local, por lo que ingrese a Colab, e ingresar los siguientes comandos:
 ~~~
+!git clone https://github.com/PatrichsInocenteCM274/Proyecto-AIR-HOCKEY-.git 
+%cd Proyecto-AIR-HOCKEY-/
+!pip install -e .
+~~~
+
+##### 1. Entrenamiento de cada Scara desde cero (Se borrará el modelo entrenado anteriormente):  
+Para entrenar la scara derecha con TD3, escribimos:  
+~~~
+!python3 td3_.py --scara=right  
+~~~
+Para entrenar la scara izquierda con TD3, escribimos:  
+~~~
+!python3 td3_.py --scara=left  
+~~~
+Para entrenar solo scara izquierda con modelo DDPG desde cero:  
+~~~
+!python3 ddpg_train_scara_left.py
+~~~
+
+##### 2. Para capturar grabaciones del entrenamiento de cada robot scara, escribir:  
+En el caso de querer obtener la grabación de scara derecha:  
+~~~
+!python3 td3_inferencia.py --scara=right  
+~~~
+En el caso de querer obtener la grabación de scara izquierda:  
+~~~
+!python3 td3_inferencia.py --scara=left  
+~~~
+
+
+
+#### EN MAQUINA LOCAL (PROBADO EN LINUX)
+
+En local podremos mostrar interactivamente nuestro resultado de entrenamiento mediante el entorno de pyBullet, por lo que aperture una consola y escriba los siguientes comandos:
+
+~~~
+git clone https://github.com/PatrichsInocenteCM274/Proyecto-AIR-HOCKEY-.git 
+cd Proyecto-AIR-HOCKEY-/
 pip install -e .
 ~~~
-##### 3.1. Para mostrar el juego entre dos agentes TD3 jugando Air Hockey (Abrirá una pantalla GUI), escribir el siguiente comando en consola:  
+##### 1. Para mostrar el juego entre dos agentes TD3 jugando Air Hockey (Abrirá una pantalla GUI), escribir el siguiente comando en consola:  
 ~~~
 python3 td3_inferencia.py --scara=all --models=1
 ~~~
@@ -38,51 +77,25 @@ https://user-images.githubusercontent.com/30361234/208745597-156dc360-4461-4b2e-
 
 
 
-##### 3.2. Para mostrar el juego entre TD3 Y DDPG jugando Air Hockey (Abrirá una pantalla GUI), escribir el siguiente comando en consola:  
+##### 2. Para mostrar el juego entre TD3 Y DDPG jugando Air Hockey (Abrirá una pantalla GUI), escribir el siguiente comando en consola:  
 ~~~
 python3 td3_inferencia.py --scara=all --models=2
 ~~~
 
 https://user-images.githubusercontent.com/30361234/208436476-b9fe48ae-4d40-4fad-96a8-29592c0ea0a2.mp4
 
+##### 3. Para poder comprender como los datos trabajan internamente, se ha preparado un modo Demo que permite observar el tablero con identificadores de coordenadas (Se abrirá una pantalla GUI), escriba en consola:
 
-##### 4. Para capturar grabaciones del entrenamiento de cada robot scara, escribir:  
-En el caso de querer obtener la grabación de scara derecha:  
-~~~
-python3 td3_inferencia.py --scara=right  
-~~~
-En el caso de querer obtener la grabación de scara izquierda:  
-~~~
-python3 td3_inferencia.py --scara=left  
-~~~
-##### 5. Para entrenar cada scara desde cero (Se borrará el modelo entrenado anteriormente):  
-Para entrenar la scara derecha con TD3, escribimos:  
-~~~
-python3 td3_.py --scara=right  
-~~~
-Para entrenar la scara izquierda con TD3, escribimos:  
-~~~
-python3 td3_.py --scara=left  
-~~~
-Para entrenar solo scara izquierda con modelo DDPG desde cero:  
-~~~
-python3 ddpg_train_scara_left.py
-~~~
-
-### Modo demo:
-
-
-https://user-images.githubusercontent.com/30361234/208754050-1c7c75ca-9b21-420a-b6f8-21ddcff7ee80.mp4
-
-
-Podemos observar el tablero con identificadores de coordenadas (Se abrirá una pantalla GUI), para poder comprender como los datos trabajan internamente, escribiendo en consola:
 ~~~
 python3 demo.py 
 ~~~
 
+https://user-images.githubusercontent.com/30361234/208754050-1c7c75ca-9b21-420a-b6f8-21ddcff7ee80.mp4
+
 
 ### Métricas de Entrenamiento:
-Para observar el progreso del entrenamiento, se ha preparado un gráfico para cada robot scara, donde se muestra el progreso en una ventana de 100 episodios, para ver escribir en consola:
+
+##### 4. Para observar las métricas resultantes del entrenamiento, se ha preparado un gráfico para cada robot scara, donde se muestra el progreso en una ventana de 100 episodios, para ver escribir en consola:
 ##### Para visualizar métrica de la scara derecha:
 ~~~
 python3 visualiza.py --scara=right
