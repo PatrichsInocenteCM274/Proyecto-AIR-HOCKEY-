@@ -53,17 +53,30 @@ En el caso de querer obtener la grabación de scara izquierda:
 !python3 td3_inferencia.py --scara=left  
 ~~~
 
+##### 3. Finalmente para descargar proyecto entrenado a nuestra maquina local, escribir:
+~~~
+from google.colab import files
+!zip -r /content/Proyecto-AIR-HOCKEY-.zip /content/Proyecto-AIR-HOCKEY-/
+files.download('/content/Proyecto-AIR-HOCKEY-.zip')
+~~~
 
 
 #### EN MAQUINA LOCAL (PROBADO EN LINUX)
 
-En local podremos mostrar interactivamente nuestro resultado de entrenamiento mediante el entorno de pyBullet, por lo que aperture una consola y escriba los siguientes comandos:
+De forma local podremos mostrar interactivamente el resultado del entrenamiento mediante el entorno de pyBullet, por lo que aperture una consola y escriba los siguientes comandos:
 
+##### Si usted ha entrenado en colab el modelo, descomprima el proyecto descargado, acceda a él e instale las dependencias con el comando:
+~~~
+pip install -e .
+~~~
+
+##### Caso contrario, usted desea probar directamente el entorno con el entrenamiento por defecto, escriba:
 ~~~
 git clone https://github.com/PatrichsInocenteCM274/Proyecto-AIR-HOCKEY-.git 
 cd Proyecto-AIR-HOCKEY-/
 pip install -e .
 ~~~
+
 ##### 1. Para mostrar el juego entre dos agentes TD3 jugando Air Hockey (Abrirá una pantalla GUI), escribir el siguiente comando en consola:  
 ~~~
 python3 td3_inferencia.py --scara=all --models=1
