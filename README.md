@@ -56,8 +56,9 @@ En el caso de querer obtener la grabación de scara izquierda:
 ##### 3. Finalmente para descargar proyecto entrenado a nuestra maquina local, escribir:
 ~~~
 from google.colab import files
-!zip -r /content/Proyecto-AIR-HOCKEY-.zip /content/Proyecto-AIR-HOCKEY-/
-files.download('/content/Proyecto-AIR-HOCKEY-.zip')
+%cd ..
+!zip -r Proyecto-AIR-HOCKEY-.zip Proyecto-AIR-HOCKEY-/
+files.download('Proyecto-AIR-HOCKEY-.zip')
 ~~~
 
 ## <ins> EN MAQUINA LOCAL (PROBADO EN LINUX)</ins>
