@@ -20,7 +20,7 @@ Es importante que al momento de interactuar con el entorno pybullet, podamos rot
 
 ### Instrucciones de Uso:
 
-## <ins>EN COLAB</ins>
+### <ins>EN COLAB</ins>
 
 Los procesos de entrenamiento y visualización de videos se harán en colab para no repercutir en gastos computacionales de nuestra maquina local, por lo que usted debería ingresar a Colab y ejecutar los siguientes comandos:
 ~~~
@@ -56,12 +56,11 @@ En el caso de querer obtener la grabación de scara izquierda:
 ##### 3. Finalmente para descargar proyecto entrenado a nuestra maquina local, escribir:
 ~~~
 from google.colab import files
-%cd ..
-!zip -r Proyecto-AIR-HOCKEY-.zip Proyecto-AIR-HOCKEY-/
+!zip -r Proyecto-AIR-HOCKEY-.zip ./
 files.download('Proyecto-AIR-HOCKEY-.zip')
 ~~~
 
-## <ins> EN MAQUINA LOCAL (PROBADO EN LINUX)</ins>
+### <ins> EN MAQUINA LOCAL (PROBADO EN LINUX)</ins>
 
 De forma local podremos mostrar interactivamente el resultado del entrenamiento mediante el entorno de pyBullet, por lo que aperture una consola y escriba los siguientes comandos:
 
