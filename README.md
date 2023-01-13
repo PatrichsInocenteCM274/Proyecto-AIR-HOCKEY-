@@ -19,10 +19,15 @@ Es importante que al momento de interactuar con el entorno pybullet, podamos rot
 
 
 ### Instrucciones de Uso:
-
+ 
 ### <ins>EN COLAB</ins>
+Los procesos de entrenamiento y visualización de videos se harán en colab para no repercutir en gastos computacionales de nuestra maquina local, por lo que usted debería ingresar a
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/PatrichsInocenteCM274/Proyecto-AIR-HOCKEY-/blob/master/Entorno_Air_Hockey_Entrenamiento_con_TD3_y_DDPG.ipynb) donde se ha preparado un cuaderno, el cual pueda usted ejecutar.
 
-Los procesos de entrenamiento y visualización de videos se harán en colab para no repercutir en gastos computacionales de nuestra maquina local, por lo que usted debería ingresar a Colab https://colab.research.google.com/, crear un cuaderno y ejecutar los siguientes comandos:
+##### Los comandos que se muestran en el cuaderno son los siguientes:
+
+
+##### 0. Para poder clonar el proyecto:  
 ~~~
 !git clone https://github.com/PatrichsInocenteCM274/Proyecto-AIR-HOCKEY-.git 
 %cd Proyecto-AIR-HOCKEY-/
@@ -30,7 +35,7 @@ Los procesos de entrenamiento y visualización de videos se harán en colab para
 ~~~
 
 ##### 1. Entrenamiento de cada Scara desde cero (Se borrará el modelo entrenado anteriormente):  
-Para entrenar la scara derecha con TD3, escribimos:  
+Para entrenar la scara derecha con TD3:  
 ~~~
 !python3 td3_.py --scara=right  
 ~~~
