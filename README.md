@@ -22,7 +22,7 @@ Es importante que al momento de interactuar con el entorno pybullet, podamos rot
 
 ### <ins>EN COLAB</ins>
 
-Los procesos de entrenamiento y visualización de videos se harán en colab para no repercutir en gastos computacionales de nuestra maquina local, por lo que usted debería ingresar a Colab y ejecutar los siguientes comandos:
+Los procesos de entrenamiento y visualización de videos se harán en colab para no repercutir en gastos computacionales de nuestra maquina local, por lo que usted debería ingresar a Colab https://colab.research.google.com/, crear un cuaderno y ejecutar los siguientes comandos:
 ~~~
 !git clone https://github.com/PatrichsInocenteCM274/Proyecto-AIR-HOCKEY-.git 
 %cd Proyecto-AIR-HOCKEY-/
