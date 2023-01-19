@@ -349,8 +349,8 @@ if __name__ == "__main__":
             episode_timesteps = 0
             episode_num += 1
 
-            if avg_reward > 300 :
-                politica.modificar_ratio_aprendizaje(0.0001)
+            #if avg_reward > 400 :
+                #politica.modificar_ratio_aprendizaje(0.0001)
             
         # Al inicio realizamos una exploracion con acciones aleatorias con la finalidad de ingresar transiciones al replay buffer
         # y el metodo de entrenamiento tenga un lote de transiciones con el cual trabajar.
