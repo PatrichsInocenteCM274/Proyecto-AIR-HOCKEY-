@@ -124,9 +124,9 @@ python3 visualiza.py --scara=left
 ~~~
 ##### Para visualizar comparativa de TD3 vs DDPG en la scara Izquierda:
 ~~~
-python3 visualiza.py --scara=left --models=2
+python3 visualiza.py --scara=left --models=2!
 ~~~
-![compara](https://user-images.githubusercontent.com/30361234/208805612-41396dce-e14d-4f76-8624-d60b6bfa4dcf.png)
 
+[comparativa](https://user-images.githubusercontent.com/30361234/213372651-c7032b85-14f3-4eb0-8303-295822509ec4.png)
 
 
