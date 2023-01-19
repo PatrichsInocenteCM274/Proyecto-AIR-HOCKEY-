@@ -16,52 +16,17 @@ import cv2
 import warnings
 warnings.filterwarnings('ignore')
 
-def display_video(frames, framerate=60, episode_reward=0.):
-  """Generates video from `frames`.
-
-  Args:
-    frames (ndarray): Array of shape (n_frames, height, width, 3).
-    framerate (int): Frame rate in units of Hz.
-
-  Returns:
-    Display object.
-  """
-  height, width, _ = frames[0].shape
-  print("Grabando Video")
-  dpi = 70
-  orig_backend = matplotlib.get_backend()
-  matplotlib.use('Agg')  # Switch to headless 'Agg' to inhibit figure rendering.
-  fig, ax = plt.subplots(1, 1, figsize=(width / dpi, height / dpi), dpi=dpi)
-  matplotlib.use(orig_backend)  # Switch back to the original backend.
-  ax.set_axis_off()
-  ax.set_aspect('equal')
-  ax.set_position([0, 0, 1, 1])
-  im = ax.imshow(frames[0])
-  plt.rcParams['font.family'] = 'serif'
-  title = ax.text(0.5,0.85, "", bbox={'facecolor':'w', 'alpha':0.5, 'pad':5},
-                transform=ax.transAxes, ha="center",size=10,fontdict=None)
-  
-  def update(frame):
-    im.set_data(frame)
-    title.set_text(u"Episode Num: {} Reward: {:.2f}".format(episode_num,episode_reward))
-    return im,title
-
-  interval = 1000/framerate
-  anim = animation.FuncAnimation(fig=fig, func=update, frames=frames,
-                                  interval=interval, blit=True, repeat=False)
-                                  
-  writervideo = animation.FFMpegWriter(fps=60) 
-  anim.save("video"+str(episode_num)+".mp4", writer=writervideo) 
-
+# Important announcement:
+# Implementation of Deep Deterministic Policy Gradients (DDPG)
+# Extracted from the official repositories of https://github.com/sfujim/TD3, 
+# it is not an own version and it is only used for comparison purposes, 
+# I give full credit to its creators cited in the paper https://arxiv.org /abs/1509.02971.
 
 
 # Runs policy for X episodes and returns average reward
 # A fixed seed is used for the eval environment
 def eval_policy(policy, env_name, seed, eval_episodes=10):
 	print("--------------Evaluacion---------------")
-	#eval_env = gym.make(env_name)
-	#env.seed(seed + 100)
-	#env.set_timestep(timestep=1/240)
 	avg_reward = 0.
 	for num_episode in range(eval_episodes):
 		frames_episode = []
@@ -72,25 +37,20 @@ def eval_policy(policy, env_name, seed, eval_episodes=10):
 			state, reward, done, _ = env.step([action,args.scara])
 			avg_reward += reward
 			last_episode_reward += reward
-			#if num_episode == eval_episodes-1:
-			#	last_episode_reward += reward
-			#	font = cv2.FONT_HERSHEY_DUPLEX 
-			#	frames_episode.append(cv2.putText(env.render(),"Current reward: {:.2f} Accumulated reward: {:.2f}"
-            #                                .format(reward,last_episode_reward),(12,25), font, 0.40,0.7))
-		#if num_episode == eval_episodes-1:
-		#	display_video(frames_episode, framerate=60,episode_reward=last_episode_reward)
+
 		print(f'Disco coords: {env.coords()} Reward: {last_episode_reward:.2f}')
 	avg_reward /= eval_episodes
 
 	print(f"Evaluation over {eval_episodes} episodes: {avg_reward:.3f}")
 	print("---------------------------------------")
-	#env.set_timestep(timestep=1/60)
+
 	return avg_reward
 
 avg_reward_list = []
 ep_reward_list = []
 avg_reward = 0
 cont = 0
+
 
 if __name__ == "__main__":
 	
@@ -103,10 +63,10 @@ if __name__ == "__main__":
 	parser.add_argument("--max_timesteps", default=1e6, type=int)   # Max time steps to run environment
 	parser.add_argument("--expl_noise", default=0.1)                # Std of Gaussian exploration noise
 	parser.add_argument("--batch_size", default=100, type=int)      # Batch size for both actor and critic
-	parser.add_argument("--discount", default=0.99)                 # Discount factor
+	parser.add_argument("--discount", default=0.9999)                 # Discount factor
 	parser.add_argument("--tau", default=0.005)                     # Target network update rate
-	parser.add_argument("--policy_noise", default=0.2)              # Noise added to target policy during critic update
-	parser.add_argument("--noise_clip", default=0.5)                # Range to clip target policy noise
+	parser.add_argument("--policy_noise", default=0.1)              # Noise added to target policy during critic update
+	parser.add_argument("--noise_clip", default=0.3)                # Range to clip target policy noise
 	parser.add_argument("--policy_freq", default=1, type=int)       # Frequency of delayed policy updates
 	parser.add_argument("--save_model", default="store_true")        # Save model and optimizer parameters
 	parser.add_argument("--load_model", default="")                 # Model load file name, "" doesn't load, "default" uses file_name
@@ -122,8 +82,8 @@ if __name__ == "__main__":
 		os.makedirs("./results")
 
 	if args.save_model:
-		if not os.path.exists("./models"):
-			os.makedirs("./models")
+		if not os.path.exists("./models_DDPG"):
+			os.makedirs("./models_DDPG")
 		if not os.path.exists("./replaybuffer"):
 			os.makedirs("./replaybuffer")
 		
@@ -155,7 +115,7 @@ if __name__ == "__main__":
 	if args.load_model != "":
 		args.start_timesteps = 0
 		policy_file = file_name if args.load_model == "default" else args.load_model
-		policy.load(f"./models/{policy_file}")
+		policy.load(f"./models_DDPG/{policy_file}")
 		replay_buffer.load()
 		np.random.set_state(pickle.load(open("./replaybuffer/random_state.pkl", "rb")))
 		env.random_set_state(pickle.load(open("./replaybuffer/random_action.pkl", "rb")))
@@ -196,7 +156,7 @@ if __name__ == "__main__":
 
 		# Train agent after collecting sufficient data
 		if t >= args.start_timesteps:
-			policy.train(replay_buffer, args.batch_size)
+			policy.train(replay_buffer, args.batch_size, done_bool)
 
 		if done: 
 			# +1 to account for 0 indexing. +0 on ep_timesteps since it will increment +1 even if done=True
@@ -210,7 +170,7 @@ if __name__ == "__main__":
 			state, done = env.reset(scara=args.scara), False
 			episode_reward = 0
 			episode_timesteps = 0
-			episode_num += 1 
+			episode_num += 1
 
 		# Evaluate episode
 		if (t + 1) % args.eval_freq == 0:
@@ -218,7 +178,10 @@ if __name__ == "__main__":
 			evaluations.append(eval_policy(policy, args.env, args.seed))
 			np.save(f"./results/{file_name}", evaluations)
 			if args.save_model: 
-				policy.save(f"./models/{file_name}")
+				policy.save(f"./models_DDPG/{file_name}")
 				pickle.dump(avg_reward_list, file = open("./results/avg_reward_ddpg_"+str(args.scara)+".pkl", "wb"))
+				pickle.dump(ep_reward_list, file = open("./results/ep_reward_ddpg_"+str(args.scara)+".pkl", "wb"))
+				pickle.dump(policy.perdida_actor, file = open("./results/actor_loss_ddpg_"+str(args.scara)+".pkl", "wb"))
+				pickle.dump(policy.perdida_critico, file = open("./results/critico_loss_ddpg_"+str(args.scara)+".pkl", "wb"))
 				
 				

@@ -22,13 +22,13 @@ class SimpleAirHockeyEnv(gym.Env):
             low=np.array([-1, -1, -1, -1], dtype=np.float32),
             high=np.array([1, 1, 1, 1], dtype=np.float32))
         self.observation_space = gym.spaces.box.Box( # type: ignore
-            low=np.array([-1,-1,-1,-1,-1,-1,-1,-1,-1], dtype=np.float32), # Limite inferior de coordenada x,y disco y coordenada x,y mazo
-            high=np.array([1,1,1,1,1,1,1,1,1], dtype=np.float32))
-        print("Iniciando Entorno AIR HOCKEY Bienvenido.!")
+            low=np.array([-1,-1,-1,-1,-1,-1,-1,-1,-1,-1], dtype=np.float32), # Limite inferior de coordenada x,y disco y coordenada x,y mazo
+            high=np.array([1,1,1,1,1,1,1,1,1,1], dtype=np.float32))
+        print("Iniciando Entorno AIR HOCKEY, Bienvenido!")
         self.np_random, _ = gym.utils.seeding.np_random() # type: ignore
         self.client = None
         self.mode_GAME = False
-        self._max_episode_steps = 1000
+        self._max_episode_steps = 500
         self.scara_right_angle_servo_base = None
         self.scara_right_angle_servo_efector = None
         self.scara_left_angle_servo_base = None
@@ -59,6 +59,7 @@ class SimpleAirHockeyEnv(gym.Env):
         self.observacion_left = None
         self.winner = False
         self.models = 1
+        self.pared_evalua=False
         
     def set_mode(self, mode_GAME):
         self.mode_GAME = mode_GAME
@@ -88,32 +89,34 @@ class SimpleAirHockeyEnv(gym.Env):
                                   (mazo_right_ob[1] - disco_ob[1]) ** 2)) 
             mazo_to_disco_angle = math.atan2(mazo_right_ob[1] - disco_ob[1], mazo_right_ob[0] - disco_ob[0])
             mazo_to_goal_angle = math.atan2(mazo_right_ob[1] - (-7.48), mazo_right_ob[0] - 0.0)
+            disco_to_goal_angle = math.atan2(disco_ob[1] - (-7.48), disco_ob[0] - 0.0)
             if self.steps > self._max_episode_steps and not self.mode_GAME:
                 self.done = True
                 self.steps = 0
 
-            if self.steps <= 20:
-                p.setGravity(self.gx, 30, -10) 
+            if self.steps <= 1:
+                p.setGravity(self.gx, 500, -10) 
             else:
                 p.setGravity(0, 0.0, -10)     
-            
-            if not self.mode_GAME:
-                if mazo_to_disco < 0.40+0.47+0.2 or disco_ob[0]<-5.0 or disco_ob[0]>5.0:
-                    p.setTimeStep(1/240, self.client)
-                else:
-                    p.setTimeStep(self.timestep, self.client)
                 
             if mazo_to_disco < 0.40+0.47 and not self.choque:
                 self.step_golpe_disco = self.steps
                 reward += 50
                 self.choque=True
+                #self.done = True 
+                #self.steps = 0 
                 
-            if mazo_to_disco > 0.40+0.47 + 0.01:
+            if mazo_to_disco > 0.40+0.47 + 0.04:
                 self.choque=False
                 
+            #if (disco_ob[0]<-5.0 or disco_ob[0]>5.0) and self.pared_evalua and not self.mode_GAME:
+            #    reward -= 5
+            #    self.done = True
+            #    self.steps = 0    
+
             if disco_ob[1]<-8.0 and not self.anotacion:
                 self.score_right += 1
-                if self.score_right==7: self.winner = True
+                if self.score_right==8: self.winner = True
                 self.step_anotacion = self.steps
                 reward += 100
                 self.done = True
@@ -145,13 +148,12 @@ class SimpleAirHockeyEnv(gym.Env):
                 self.done = True
                 self.steps = 0
                 
-            #if mazo_right_ob[1] >= 7.43 and not self.mode_GAME:
-            #    self.done = True
-            #    self.steps = 0
+            if mazo_right_ob[1] >= 7.43 and not self.mode_GAME:
+                reward -= 1.0    
 
-            self.steps=self.steps+1
+            self.steps = self.steps+1
             self.prev_dist_to_disco = mazo_to_disco
-            self.prev_disc_obs = disco_ob[1]    
+            self.prev_disc_obs = disco_ob[1]
 
                 # Interpolacion lineal -------------
             disco_ob_x = interp(disco_ob[0],[-5.07,5.07],[-1,1])
@@ -162,11 +164,13 @@ class SimpleAirHockeyEnv(gym.Env):
             angle_efector = interp(mazo_right_ob[3],[-2.9,2.9],[-1,1])
             mazo_to_disco = interp(mazo_to_disco,[0.85,18.0],[-1,1])
             mazo_to_disco_angle = interp(mazo_to_disco_angle,[-3.1415,3.1415],[-1,1])
-            mazo_to_goal_angle = interp(mazo_to_disco_angle,[1.25,1.89],[-1,1])
+            mazo_to_goal_angle = interp(mazo_to_goal_angle,[1.25,1.89],[-1,1])
+            disco_to_goal_angle = interp(disco_to_goal_angle,[0,3.14],[-1,1])
             # -----------------------
 
             ob = np.array(tuple([disco_ob_x])+tuple([disco_ob_y])+tuple([mazo_right_ob_x])+tuple([mazo_right_ob_y])+
-                tuple([angle_servo])+tuple([angle_efector])+tuple([mazo_to_disco])+tuple([mazo_to_disco_angle])+tuple([mazo_to_goal_angle]), dtype=np.float32)
+                tuple([angle_servo])+tuple([angle_efector])+tuple([mazo_to_disco])+tuple([mazo_to_disco_angle])
+                +tuple([mazo_to_goal_angle])+tuple([disco_to_goal_angle]), dtype=np.float32)
             if not scara == 'all':
                 return ob, reward, self.done, dict()
             else:
@@ -179,34 +183,32 @@ class SimpleAirHockeyEnv(gym.Env):
             mazo_to_disco = math.sqrt(((mazo_left_ob[0] - disco_ob[0]) ** 2 +
                                   (mazo_left_ob[1] - disco_ob[1]) ** 2)) 
             mazo_to_disco_angle = math.atan2(mazo_left_ob[1] - disco_ob[1], mazo_left_ob[0] - disco_ob[0])
-            mazo_to_goal_angle = math.atan2(mazo_left_ob[1] - (-7.48), mazo_left_ob[0] - 0.0) 
+            mazo_to_goal_angle = math.atan2(mazo_left_ob[1] - (7.48), mazo_left_ob[0] - 0.0) 
+            disco_to_goal_angle = math.atan2(disco_ob[1] - (7.48), disco_ob[0] - 0.0) 
 
             if self.steps > self._max_episode_steps and not self.mode_GAME:
                 self.done = True
                 self.steps = 0
 
-            if self.steps <= 20:
-                p.setGravity(self.gx, -30.0, -10) 
+            if self.steps <= 1:
+                p.setGravity(self.gx, -500.0, -10) 
             else:
-                p.setGravity(0, 0.0, -10)      
-            
-            if not self.mode_GAME:
-                if mazo_to_disco < 0.40+0.47+0.2 or disco_ob[0]<-5.0 or disco_ob[0]>5.0:
-                    p.setTimeStep(1/240, self.client)
-                else:
-                    p.setTimeStep(self.timestep, self.client)
+                p.setGravity(0, 0.0, -10)
                 
             if mazo_to_disco < 0.40+0.47 and not self.choque:
                 self.step_golpe_disco = self.steps
                 reward += 50
                 self.choque=True
+                #self.done = True 
+                #self.steps = 0 
                 
-            if mazo_to_disco > 0.40+0.47 + 0.01:
+                 
+            if mazo_to_disco > 0.40+0.47 + 0.04:
                 self.choque=False
                 
             if disco_ob[1]>8.0 and not self.anotacion:
                 self.score_left += 1
-                if self.score_left==7: self.winner = True
+                if self.score_left==8: self.winner = True
                 self.step_anotacion = self.steps
                 reward += 100
                 self.done = True
@@ -238,10 +240,8 @@ class SimpleAirHockeyEnv(gym.Env):
                 self.done = True
                 self.steps = 0
                 
-            #if mazo_left_ob[1] <= -7.43 and not self.mode_GAME:
-            #    #print("7")
-            #    self.done = True
-            #    self.steps = 0       
+            if mazo_left_ob[1] <= -7.43 and not self.mode_GAME:
+                reward -= 1.0    
 
             self.steps=self.steps+1
             self.prev_dist_to_disco = mazo_to_disco
@@ -256,11 +256,13 @@ class SimpleAirHockeyEnv(gym.Env):
             angle_efector = interp(mazo_left_ob[3],[-2.9,2.9],[-1,1])
             mazo_to_disco = interp(mazo_to_disco,[0.85,18.0],[-1,1])
             mazo_to_disco_angle = interp(mazo_to_disco_angle,[-3.1415,3.1415],[-1,1])
-            mazo_to_goal_angle = interp(mazo_to_disco_angle,[1.25,1.89],[-1,1])
+            mazo_to_goal_angle = interp(mazo_to_goal_angle,[1.25,1.89],[-1,1])
+            disco_to_goal_angle = interp(disco_to_goal_angle,[-3.14,0],[-1,1])
             # -----------------------
             
             ob = np.array(tuple([disco_ob_x])+tuple([disco_ob_y])+tuple([mazo_left_ob_x])+tuple([mazo_left_ob_y])+
-                tuple([angle_servo])+tuple([angle_efector])+tuple([mazo_to_disco])+tuple([mazo_to_disco_angle])+tuple([mazo_to_goal_angle]), dtype=np.float32)
+                tuple([angle_servo])+tuple([angle_efector])+tuple([mazo_to_disco])+tuple([mazo_to_disco_angle])
+                +tuple([mazo_to_goal_angle])+tuple([disco_to_goal_angle]), dtype=np.float32)
             if not scara == 'all':
                 return ob, reward, self.done, dict()
             else:
@@ -322,28 +324,34 @@ class SimpleAirHockeyEnv(gym.Env):
         self.choque=False
         self.choque_pared_enemiga = False
         self.choque_pared_aliada = False
-        self.step_golpe_disco = 0        
+        self.step_golpe_disco = 0   
+        self.pared_evalua=False     
         score = Score(self.client,self.models)
         score.change_score(self.score_right,self.score_left)
         floor = Floor(self.client)
         mesa = Mesa(self.client)
         #human_mallet = Human_mallet(self.client)
         angle = 0.0
-        self.x = self.np_random.uniform(-2.20, 2.20)
-        self.y = 0
-        self.gx = self.np_random.uniform(-30, 30)
+        if scara == 'right':
+            self.x = self.np_random.uniform(-4.20, 4.20)
+            self.y = self.np_random.uniform(-4.20, -2.20)
+        if scara == 'left':
+            self.x = self.np_random.uniform(-4.20, 4.20)
+            self.y = self.np_random.uniform(2.20, 4.20)
+        self.gx = self.np_random.uniform(-500, 500)
         self.disco = Disco(self.client,(self.x,self.y))
         disco_ob = self.disco.get_observation()
 
         if scara == 'right' or scara == 'all':
             self.scara_right = ScaraR(self.client)
-            for _ in range(20):
+            for _ in range(200):
                 p.stepSimulation()
             mazo_right_ob = self.scara_right.get_observation() 
             mazo_to_disco = math.sqrt(((mazo_right_ob[0] - disco_ob[0]) ** 2 +
                                     (mazo_right_ob[1] - disco_ob[1]) ** 2))             
             mazo_to_disco_angle = math.atan2(mazo_right_ob[1] - disco_ob[1], mazo_right_ob[0] - disco_ob[0]) 
             mazo_to_goal_angle = math.atan2(mazo_right_ob[1] - (-7.48), mazo_right_ob[0] - 0.0)
+            disco_to_goal_angle = math.atan2(disco_ob[1] - (-7.48), disco_ob[0] - 0.0) 
             self.prev_disc_obs = disco_ob[1]
             
             # Interpolacion lineal -------------
@@ -355,11 +363,13 @@ class SimpleAirHockeyEnv(gym.Env):
             angle_efector = interp(mazo_right_ob[3],[-2.9,2.9],[-1,1])
             mazo_to_disco = interp(mazo_to_disco,[0.85,18.0],[-1,1])
             mazo_to_disco_angle = interp(mazo_to_disco_angle,[-3.1415,3.1415],[-1,1])
-            mazo_to_goal_angle = interp(mazo_to_disco_angle,[1.25,1.89],[-1,1])
+            mazo_to_goal_angle = interp(mazo_to_goal_angle,[1.25,1.89],[-1,1])
+            disco_to_goal_angle = interp(disco_to_goal_angle,[0, 3.14],[-1,1])
             # -----------------------
             #ob = np.array(disco_ob+mazo_right_ob+tuple([mazo_to_disco_angle]), dtype=np.float32)
             ob = np.array(tuple([disco_ob_x])+tuple([disco_ob_y])+tuple([mazo_right_ob_x])+tuple([mazo_right_ob_y])+
-            tuple([angle_servo])+tuple([angle_efector])+tuple([mazo_to_disco])+tuple([mazo_to_disco_angle])+tuple([mazo_to_goal_angle]), dtype=np.float32)
+            tuple([angle_servo])+tuple([angle_efector])+tuple([mazo_to_disco])+tuple([mazo_to_disco_angle])
+            +tuple([mazo_to_goal_angle])+tuple([disco_to_goal_angle]), dtype=np.float32)
             if not scara == 'all':
                 return ob
             else:
@@ -373,7 +383,8 @@ class SimpleAirHockeyEnv(gym.Env):
             mazo_to_disco = math.sqrt(((mazo_left_ob[0] - disco_ob[0]) ** 2 +
                                     (mazo_left_ob[1] - disco_ob[1]) ** 2))             
             mazo_to_disco_angle = math.atan2(mazo_left_ob[1] - disco_ob[1], mazo_left_ob[0] - disco_ob[0]) 
-            mazo_to_goal_angle = math.atan2(mazo_left_ob[1] - (-7.48), mazo_left_ob[0] - 0.0)
+            mazo_to_goal_angle = math.atan2(mazo_left_ob[1] - (7.48), mazo_left_ob[0] - 0.0)
+            disco_to_goal_angle = math.atan2(disco_ob[1] - (7.48), disco_ob[0] - 0.0) 
             self.prev_disc_obs = disco_ob[1]
             
             # Interpolacion lineal -------------
@@ -385,11 +396,13 @@ class SimpleAirHockeyEnv(gym.Env):
             angle_efector = interp(mazo_left_ob[3],[-2.9,2.9],[-1,1])
             mazo_to_disco = interp(mazo_to_disco,[0.85,18.0],[-1,1])
             mazo_to_disco_angle = interp(mazo_to_disco_angle,[-3.1415,3.1415],[-1,1])
-            mazo_to_goal_angle = interp(mazo_to_disco_angle,[1.25,1.89],[-1,1])
+            mazo_to_goal_angle = interp(mazo_to_goal_angle,[1.25,1.89],[-1,1])
+            disco_to_goal_angle = interp(disco_to_goal_angle,[-3.14,0],[-1,1])
             # -----------------------
             
             ob = np.array(tuple([disco_ob_x])+tuple([disco_ob_y])+tuple([mazo_left_ob_x])+tuple([mazo_left_ob_y])+
-            tuple([angle_servo])+tuple([angle_efector])+tuple([mazo_to_disco])+tuple([mazo_to_disco_angle])+tuple([mazo_to_goal_angle]), dtype=np.float32)
+            tuple([angle_servo])+tuple([angle_efector])+tuple([mazo_to_disco])+tuple([mazo_to_disco_angle])
+            +tuple([mazo_to_goal_angle])+tuple([disco_to_goal_angle]), dtype=np.float32)
             if not scara == 'all':
                 return ob
             else:
@@ -418,6 +431,7 @@ class SimpleAirHockeyEnv(gym.Env):
         self.client = p.connect(p.GUI)
         p.setGravity(0, 0.0, -10)
         p.setRealTimeSimulation(1)
+        p.setTimeStep(1/60, self.client)  
         floor = Floor(self.client)
         mesa = Mesa(self.client)
         #referencia = Referencia(self.client)
@@ -480,7 +494,7 @@ class SimpleAirHockeyEnv(gym.Env):
             mazo_to_goal_angle = math.atan2(scara_right_ob[1] - (-7.48), scara_right_ob[0] - 0.0)   
             mazo_to_disco = math.sqrt(((scara_right_ob[0] - disco_ob[0]) ** 2 +
                                   (scara_right_ob[1] - disco_ob[1]) ** 2))
-    
+            disco_to_goal_angle = math.atan2(disco_ob[1] - (7.48), disco_ob[0] - 0.0) 
             p.addUserDebugText(
                 "X = "+"{:.2f}".format(scara_left_ob[0])+" Y = "+"{:.2f}".format(scara_left_ob[1]),
                 textPosition=[scara_left_ob[0], scara_left_ob[1], 2.80],
@@ -498,7 +512,7 @@ class SimpleAirHockeyEnv(gym.Env):
             
             p.addUserDebugText(
                 "X = "+"{:.2f}".format(disco_ob[0])+" Y = "+"{:.2f}".format(disco_ob[1])+" angle {:.2f}".format(mazo_to_disco_angle)
-                +" angle_to_goal {:.2f}".format(mazo_to_goal_angle),
+                +" angle_to_goal {:.2f}".format(mazo_to_goal_angle)+"disco_goal{:.2f}".format(disco_to_goal_angle),
                 textPosition=[disco_ob[0], disco_ob[1], 2.40],
                 textColorRGB=[1, 0, 0],
                 textSize=1,

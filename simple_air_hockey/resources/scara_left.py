@@ -23,7 +23,7 @@ class ScaraL:
         self.angle_efector = 0.8
         self.velocity_servo = 1.0
         self.velocity_efector = 1.0
-        self.apply_action(action=[-0.4,0.8,self.velocity_servo,self.velocity_efector])
+        self.apply_action(action=[-0.4,0.95,self.velocity_servo,self.velocity_efector])
 
     def get_ids(self):
         return self.scara_left, self.client

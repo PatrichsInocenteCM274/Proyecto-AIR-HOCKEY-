@@ -8,7 +8,7 @@ class Disco:
         self.start_coord = start_coord
         self.f_name = os.path.join(os.path.dirname(__file__), 'disco.urdf')
         self.disco = p.loadURDF(fileName=self.f_name,
-                        basePosition= [self.start_coord[0],self.start_coord[1],2.35],
+                        basePosition= [self.start_coord[0],self.start_coord[1],2.80],
                         physicsClientId=client)
         # Hemos realizado unas restricciones prismaticas en X,Y unidas al marco mundial
         # Con el objetivo de poder restringir movimientos en eje Z no deseados causados meramente por el simulador

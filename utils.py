@@ -1,6 +1,11 @@
 import numpy as np
 import torch
 
+# Important announcement:
+# Implementation of Deep Deterministic Policy Gradients (DDPG)
+# Extracted from the official repositories of https://github.com/sfujim/TD3, 
+# it is not an own version and it is only used for comparison purposes, 
+# I give full credit to its creators cited in the paper https://arxiv.org /abs/1509.02971.
 
 class ReplayBuffer(object):
 	def __init__(self, state_dim, action_dim, max_size=int(1e6)):

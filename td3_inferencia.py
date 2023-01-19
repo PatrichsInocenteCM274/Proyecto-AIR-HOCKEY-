@@ -21,120 +21,11 @@ import cv2
 import argparse
 import warnings
 import DDPG
+import recording_util
+import td3_
 warnings.filterwarnings("ignore")
 
-class Actor(nn.Module):
-  
-  def __init__(self, state_dim, action_dim, max_action):
-    super(Actor, self).__init__()
-    self.layer_1 = nn.Linear(state_dim, 400)
-    self.layer_2 = nn.Linear(400, 300)
-    self.layer_3 = nn.Linear(300, action_dim)
-    self.max_action = max_action
-
-  def forward(self, x):
-    x = F.relu(self.layer_1(x))
-    x = F.relu(self.layer_2(x))
-    x = self.max_action * torch.tanh(self.layer_3(x)) 
-    return x
-
-class Critic(nn.Module):
-
-  def __init__(self, state_dim, action_dim):
-    super(Critic, self).__init__()
-    # Definimos el primero de los Críticos como red neuronal profunda
-    self.layer_1 = nn.Linear(state_dim + action_dim, 400)
-    self.layer_2 = nn.Linear(400, 300)
-    self.layer_3 = nn.Linear(300, 1)
-    # Definimos el segundo de los Críticos como red neuronal profunda
-    self.layer_4 = nn.Linear(state_dim + action_dim, 400)
-    self.layer_5 = nn.Linear(400, 300)
-    self.layer_6 = nn.Linear(300, 1)
-
-  def forward(self, x, u):
-    xu = torch.cat([x, u], 1)
-    # Propagación hacia adelante del primero de los Críticos
-    x1 = F.relu(self.layer_1(xu))
-    x1 = F.relu(self.layer_2(x1))
-    x1 = self.layer_3(x1)
-    # Propagación hacia adelante del segundo de los Críticos
-    x2 = F.relu(self.layer_4(xu))
-    x2 = F.relu(self.layer_5(x2))
-    x2 = self.layer_6(x2)
-    return x1, x2
-  
-  def Q1(self, x, u):
-    xu = torch.cat([x, u], 1)
-    x1 = F.relu(self.layer_1(xu))
-    x1 = F.relu(self.layer_2(x1))
-    x1 = self.layer_3(x1)
-    return x1
-
-# Selección del dispositivo (CPU o GPU)
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-# Construir todo el proceso de entrenamiento en una clase
-class TD3(object):
-
-  def __init__(self, state_dim, action_dim, max_action):
-    self.actor = Actor(state_dim, action_dim, max_action).to(device)
-    self.actor_target = Actor(state_dim, action_dim, max_action).to(device)
-    self.actor_target.load_state_dict(self.actor.state_dict())
-    self.actor_optimizer = torch.optim.Adam(self.actor.parameters())
-    self.critic = Critic(state_dim, action_dim).to(device)
-    self.critic_target = Critic(state_dim, action_dim).to(device)
-    self.critic_target.load_state_dict(self.critic.state_dict())
-    self.critic_optimizer = torch.optim.Adam(self.critic.parameters())
-    self.max_action = max_action
-
-  def select_action(self, state):
-    state = torch.Tensor(state.reshape(1, -1)).to(device)
-    return self.actor(state).cpu().data.numpy().flatten()
-
-  # Método para cargar el modelo entrenado
-  def load(self, filename, directory,scara):
-    print("Cargando modelo guardado")
-    self.actor.load_state_dict(torch.load("%s/%s_actor_%s.pth" % (directory, filename,scara)))
-    self.critic.load_state_dict(torch.load("%s/%s_critic_%s.pth" % (directory, filename,scara)))
-    
-def display_video(frames, framerate=60, episode_reward=0,episode_num=0):
-  """Generates video from `frames`.
-
-  Args:
-    frames (ndarray): Array of shape (n_frames, height, width, 3).
-    framerate (int): Frame rate in units of Hz.
-
-  Returns:
-    Display object.
-  """
-  height, width, _ = frames[0].shape
-  print("Grabando Video")
-  dpi = 70
-  orig_backend = matplotlib.get_backend()
-  matplotlib.use('Agg')  # Switch to headless 'Agg' to inhibit figure rendering.
-  fig, ax = plt.subplots(1, 1, figsize=(width / dpi, height / dpi), dpi=dpi)
-  matplotlib.use(orig_backend)  # Switch back to the original backend.
-  ax.set_axis_off()
-  ax.set_aspect('equal')
-  ax.set_position([0, 0, 1, 1])
-  im = ax.imshow(frames[0])
-  title = ax.text(0.5,0.85, "", bbox={'facecolor':'w', 'alpha':0.5, 'pad':5},
-                transform=ax.transAxes, ha="center")
-  def update(frame):
-    im.set_data(frame)
-    title.set_text(u"Episode Num: {} Reward: {}".format(episode_num,episode_reward))
-    return im,title
-
-  interval = 1000/framerate
-  anim = animation.FuncAnimation(fig=fig, func=update, frames=frames,
-                                  interval=interval, blit=True, repeat=False)
-                                  
-  writervideo = animation.FFMpegWriter(fps=framerate) 
-  anim.save("video_inferencia_"+str(args.scara)+str(episode_num)+".mp4", writer=writervideo) 
-
-"""## Hacemos una función que evalúa la política calculando su recompensa promedio durante 10 episodios"""
-
-def evaluate_policy(policy_right,policy_left,eval_episodes=7):
+def evaluate_policy(policy_right,policy_left,models=1,eval_episodes=0,init=False):
 
   if policy_right and policy_left:
     print("Comienza Demostración")
@@ -145,32 +36,33 @@ def evaluate_policy(policy_right,policy_left,eval_episodes=7):
       done_right = False
       done_left = False
       while not done_right and not done_left:
-        action_right = policy_right.select_action(np.array(obs_right))
-        action_left = policy_left.select_action(np.array(obs_left))
+        action_right = policy_right.accion(np.array(obs_right))
+        if models == 1 : action_left = policy_left.accion(np.array(obs_left))
+        else : action_left = policy_left.select_action(np.array(obs_left))
         ob, reward, done, _ = env.step([action_right,action_left,"all"])
         obs_right, reward_right, done_right = ob[0], reward[0], done[0]
         obs_left, reward_left, done_left = ob[1], reward[1], done[1] 
   
   else:
     avg_reward=0
-    for num_episode in range(eval_episodes):
-      frames_episode = []
-      last_episode_reward= 0.
-      obs = env.reset(scara=args.scara)
-      done = False
-      while not done:
-        if args.scara == "right":
-          action = policy_right.select_action(np.array(obs))
-        if args.scara == "left":
-          action = policy_left.select_action(np.array(obs))
-        obs, reward, done, _ = env.step([action,args.scara])
-        last_episode_reward += reward
-        avg_reward += reward
-        font = cv2.FONT_HERSHEY_DUPLEX 
-        frames_episode.append(cv2.putText(env.render(),"Current reward: {:.2f} Accumulated reward: {:.2f}".format(reward,last_episode_reward),(12,25), font, 0.40,0.7))
-      display_video(frames_episode, framerate=60,episode_reward=last_episode_reward,episode_num=num_episode)
-    avg_reward /= eval_episodes
-    print("Recompensa Promedio de episodios: ",avg_reward)
+    frames_episode = []
+    last_episode_reward= 0.
+    obs = env.reset(scara=args.scara)
+    done = False
+    while not done:
+      if args.scara == "right":
+        accion = policy_right.accion(np.array(obs))
+      if args.scara == "left":
+        if models == 1 : accion = policy_left.accion(np.array(obs))
+        else : accion = policy_left.select_action(np.array(obs))
+      obs, reward, done, _ = env.step([accion,args.scara])
+      last_episode_reward += reward
+      avg_reward += reward
+      font = cv2.FONT_HERSHEY_DUPLEX 
+      frames_episode.append(cv2.putText(env.render(),"Current reward: {:.2f} Accumulated reward: {:.2f}".format(reward,last_episode_reward),(12,25), font, 0.40,0.7))
+    
+    recording_util.recording_video(frames_episode, framerate=60,episode_reward=last_episode_reward,scara=args.scara,episode_num=eval_episodes)
+    print("Recompensa de Episodio: ",avg_reward)
     
 
 
@@ -209,25 +101,28 @@ if __name__ == "__main__":
 
   torch.manual_seed(seed)
   np.random.seed(seed)
-  state_dim = env.observation_space.shape[0]
-  action_dim = env.action_space.shape[0]
-  max_action = float(env.action_space.high[0])
+  dimension_estados = env.observation_space.shape[0]
+  dimension_acciones = env.action_space.shape[0]
   policy_right = None
   policy_left = None
   if scara == "right" or scara == "all":
-    policy_right = TD3(state_dim, action_dim, max_action)
-    policy_right.load(file_name, './pytorch_models',scara="right")
+    policy_right = td3_.TD3(scara = "right", dimension_estados = dimension_estados , dimension_acciones=dimension_acciones)
+    policy_right.cargar_pesos_redes(scara="right")
   if scara == "left" or scara == "all":
     if models == 2:
       print ("---------------------------------------")
       print("Enfrentamiento de Modelo DDPG con TD3")
       print ("---------------------------------------")
-      policy_left = DDPG.DDPG(state_dim, action_dim, max_action)
-      policy_left.load(f"./models/DDPG_SimpleAirHockey-v0_0")
+      policy_left = DDPG.DDPG(state_dim = dimension_estados, action_dim = dimension_acciones, max_action = 1.0)
+      policy_left.load(f"./models_DDPG/DDPG_SimpleAirHockey-v0_0")
     else:
       print ("---------------------------------------")
       print("Enfrentamiento de Modelo TD3 con TD3")
       print ("---------------------------------------")
-      policy_left = TD3(state_dim, action_dim, max_action)
-      policy_left.load(file_name, './pytorch_models',scara="left")
-  evaluate_policy(policy_right,policy_left, eval_episodes=eval_episodes)
+      policy_left = td3_.TD3(scara = "left", dimension_estados = dimension_estados , dimension_acciones=dimension_acciones)
+      policy_left.cargar_pesos_redes(scara="left")
+  
+  for i in range(eval_episodes):
+    evaluate_policy(policy_right,policy_left, models, eval_episodes=i)
+
+    

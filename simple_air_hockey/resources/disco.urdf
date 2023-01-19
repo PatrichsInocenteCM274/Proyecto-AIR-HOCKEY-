@@ -10,6 +10,7 @@
       <geometry>
         <cylinder length="0.1" radius="0.40"/>
       </geometry>
+      <origin rpy="0 0 0" xyz="0 0 -0.4"/> 
       <material name="red"/>
     </visual>
     <collision>
@@ -17,7 +18,7 @@
         <bounce restitution_coefficient="1.0" threshold="0.01"/>
       </surface>
       <geometry>
-        <cylinder length="0.1" radius="0.40"/>
+        <cylinder length="1.0" radius="0.40"/>
       </geometry>
     </collision>
     <inertial>  

@@ -7,8 +7,11 @@ import torch.nn.functional as F
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+# Important announcement:
 # Implementation of Deep Deterministic Policy Gradients (DDPG)
-# Paper: https://arxiv.org/abs/1509.02971
+# Extracted from the official repositories of https://github.com/sfujim/TD3, 
+# it is not an own version and it is only used for comparison purposes, 
+# I give full credit to its creators cited in the paper https://arxiv.org /abs/1509.02971.
 
 
 class Actor(nn.Module):
@@ -47,14 +50,15 @@ class DDPG(object):
 	def __init__(self, state_dim, action_dim, max_action, discount=0.99, tau=0.001):
 		self.actor = Actor(state_dim, action_dim, max_action).to(device)
 		self.actor_target = copy.deepcopy(self.actor)
-		self.actor_optimizer = torch.optim.Adam(self.actor.parameters(), lr=1e-4)
+		self.actor_optimizer = torch.optim.Adam(self.actor.parameters(), lr=0.0005)
 
 		self.critic = Critic(state_dim, action_dim).to(device)
 		self.critic_target = copy.deepcopy(self.critic)
-		self.critic_optimizer = torch.optim.Adam(self.critic.parameters(), weight_decay=1e-2)
+		self.critic_optimizer = torch.optim.Adam(self.critic.parameters())
 
 		self.discount = discount
 		self.tau = tau
+		self.perdida_critico,self.perdida_actor = [],[]
 
 
 	def select_action(self, state):
@@ -62,7 +66,7 @@ class DDPG(object):
 		return self.actor(state).cpu().data.numpy().flatten()
 
 
-	def train(self, replay_buffer, batch_size=64):
+	def train(self, replay_buffer, batch_size=64, done_bool=False):
 		# Sample replay buffer 
 		state, action, next_state, reward, not_done = replay_buffer.sample(batch_size)
 
@@ -96,21 +100,25 @@ class DDPG(object):
 		for param, target_param in zip(self.actor.parameters(), self.actor_target.parameters()):
 			target_param.data.copy_(self.tau * param.data + (1 - self.tau) * target_param.data)
 
+		if done_bool:
+			self.perdida_critico.append(critic_loss)
+			self.perdida_actor.append(actor_loss)
+			print("almacena perdidas")
 
 	def save(self, filename):
-		torch.save(self.critic.state_dict(), filename + "_critic")
-		torch.save(self.critic_optimizer.state_dict(), filename + "_critic_optimizer")
+		torch.save(self.critic.state_dict(), filename + "_critic.pth")
+		torch.save(self.critic_optimizer.state_dict(), filename + "_critic_optimizer.pth")
 		
-		torch.save(self.actor.state_dict(), filename + "_actor")
-		torch.save(self.actor_optimizer.state_dict(), filename + "_actor_optimizer")
+		torch.save(self.actor.state_dict(), filename + "_actor.pth")
+		torch.save(self.actor_optimizer.state_dict(), filename + "_actor_optimizer.pth")
 
 
 	def load(self, filename):
-		self.critic.load_state_dict(torch.load(filename + "_critic"))
-		self.critic_optimizer.load_state_dict(torch.load(filename + "_critic_optimizer"))
+		self.critic.load_state_dict(torch.load(filename + "_critic.pth"))
+		self.critic_optimizer.load_state_dict(torch.load(filename + "_critic_optimizer.pth"))
 		self.critic_target = copy.deepcopy(self.critic)
 
-		self.actor.load_state_dict(torch.load(filename + "_actor"))
-		self.actor_optimizer.load_state_dict(torch.load(filename + "_actor_optimizer"))
+		self.actor.load_state_dict(torch.load(filename + "_actor.pth"))
+		self.actor_optimizer.load_state_dict(torch.load(filename + "_actor_optimizer.pth"))
 		self.actor_target = copy.deepcopy(self.actor)
 		
