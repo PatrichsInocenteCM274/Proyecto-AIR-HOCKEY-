@@ -127,6 +127,7 @@ python3 visualiza.py --scara=left
 python3 visualiza.py --scara=left --models=2!
 ~~~
 
-[comparativa](https://user-images.githubusercontent.com/30361234/213372651-c7032b85-14f3-4eb0-8303-295822509ec4.png)
+![comparativa](https://user-images.githubusercontent.com/30361234/213372824-b62a2649-a33c-4e90-b6e8-b071e260a026.png)
+
 
 
