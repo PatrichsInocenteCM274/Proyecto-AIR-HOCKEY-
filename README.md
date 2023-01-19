@@ -61,7 +61,7 @@ En el caso de querer obtener la grabación de scara izquierda:
 !python3 td3_inferencia.py --scara=left  
 ~~~
 
-##### 3. Finalmente para descargar proyecto entrenado a nuestra maquina local, escribir:
+##### 3. Finalmente para descargar proyecto ejecutar:
 ~~~
 from google.colab import files
 !zip -r Proyecto-AIR-HOCKEY-.zip ./ -x ".git/*" "simple_air_hockey.egg-info/*" "**__pycache__/*"
