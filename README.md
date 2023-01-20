@@ -26,7 +26,7 @@ Es importante que al momento de interactuar con el entorno pybullet, podamos rot
 ### Instrucciones de Uso:
  
 ### <ins>EN COLAB</ins>
-Los procesos de entrenamiento y visualización de videos se harán en colab para no repercutir en gastos computacionales de nuestra maquina local, por lo que usted debería dar click en 
+Los procesos de entrenamiento y procesamiento de videos se harán en colab para no repercutir en gastos computacionales de nuestra maquina local, por lo que usted debería dar click en 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/PatrichsInocenteCM274/Proyecto-AIR-HOCKEY-/blob/master/Entorno_Air_Hockey_Entrenamiento_con_TD3_y_DDPG.ipynb) donde se ha preparado un cuaderno, el cual pueda usted ejecutar.
 
 ##### Los comandos que se muestran en el cuaderno son los siguientes:
