@@ -111,7 +111,17 @@ https://user-images.githubusercontent.com/30361234/218317617-eb5abff4-5f19-4d98-
 python3 td3_inferencia.py --scara=all --models=2
 ~~~
 
-https://user-images.githubusercontent.com/30361234/208436476-b9fe48ae-4d40-4fad-96a8-29592c0ea0a2.mp4
+
+
+
+
+
+https://user-images.githubusercontent.com/30361234/218318212-1a5c1840-b55a-405b-ae57-1bc66f56d6a3.mp4
+
+
+
+
+
 
 ##### 3. Para poder comprender como los datos trabajan internamente, se ha preparado un modo Demo que permite observar el tablero con identificadores de coordenadas (Se abrirá una pantalla GUI), escriba en consola:
 
