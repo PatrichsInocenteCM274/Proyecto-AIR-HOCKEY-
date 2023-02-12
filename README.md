@@ -92,17 +92,7 @@ python3 td3_inferencia.py --scara=all --models=1
 ~~~
 
 
-
-
-
-
-https://user-images.githubusercontent.com/30361234/218317617-eb5abff4-5f19-4d98-9b00-bbc1cd57ff11.mp4
-
-
-
-
-
-
+https://user-images.githubusercontent.com/30361234/218318463-1c5f1838-c617-43be-9351-ad9583dd83e8.mp4
 
 
 
@@ -112,14 +102,7 @@ python3 td3_inferencia.py --scara=all --models=2
 ~~~
 
 
-
-
-
-
 https://user-images.githubusercontent.com/30361234/218318212-1a5c1840-b55a-405b-ae57-1bc66f56d6a3.mp4
-
-
-
 
 
 
