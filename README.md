@@ -7,7 +7,7 @@ El aprendizage de los agentes se ha logrado mediante el Modelo TD3 (Twin delayed
 1. El repositorio oficial del equipo creador del Modelo TD3 https://github.com/sfujim/TD3
 2. El Articulo oficial https://arxiv.org/abs/1802.09477. 
 
-Además de ello, se ha hecho una comparativa de TD3 versus DDPG (Articulo https://arxiv.org/abs/1509.02971), podrá observarlo al final de este documento.
+Además de ello, se ha hecho una comparativa de desempeño en entrenamiento de TD3 versus DDPG (Articulo https://arxiv.org/abs/1509.02971), podrá observarlo al final de este documento.
 
 
 
