@@ -1,7 +1,7 @@
 # Proyecto AIR HOCKEY en PyBullet
 
 Este proyecto tuvo como objetivo crear un entorno de Gimnasio en pybullet desde cero con la finalidad de entrenar dos agentes y enseñarles a jugar Air Hockey, los agentes robóticos son scaras de 2 grados de libertad que poseen un mazo en su efector final. 
-Puede usted ver una demostración completa dando click al siguiente icono: 
+Puede usted ver una demostración completa dando Ctrl + click al siguiente icono: 
 
 [![Abrir video en Youtube](https://badgen.net/badge/Proyecto/Youtube/red?)](https://www.youtube.com/watch?v=1iVLO5VqGB4&list=PLZ8tLoVVysdPebF_fTWDxCnU2IsV_-gIr&index=1)
 
@@ -28,7 +28,7 @@ Es importante que al momento de interactuar con el entorno pybullet, podamos rot
 ### Instrucciones de Uso:
  
 ### <ins>EN COLAB</ins>
-Los procesos de entrenamiento y procesamiento de videos se harán en colab para no repercutir en gastos computacionales de nuestra maquina local, por lo que se ha preparado un cuaderno, el cual puede usted acceder dando click en el siguiente icono:
+Los procesos de entrenamiento y procesamiento de videos se harán en colab para no repercutir en gastos computacionales de nuestra maquina local, por lo que se ha preparado un cuaderno, el cual puede usted acceder dando Ctrl + click en el siguiente icono:
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/PatrichsInocenteCM274/Proyecto-AIR-HOCKEY-/blob/master/Entorno_Air_Hockey_Entrenamiento_con_TD3_y_DDPG.ipynb) 
 ##### Los comandos que se muestran en el cuaderno son los siguientes:
