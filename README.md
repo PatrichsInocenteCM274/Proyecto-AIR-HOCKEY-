@@ -5,7 +5,7 @@ Puede usted ver una demostración completa dando **Ctrl + click** al siguiente i
 
 [![Abrir video en Youtube](https://badgen.net/badge/Proyecto/Youtube/red?)](https://www.youtube.com/watch?v=1iVLO5VqGB4&list=PLZ8tLoVVysdPebF_fTWDxCnU2IsV_-gIr&index=1)
 
-El aprendizage de los agentes se ha logrado mediante el Modelo TD3 (Twin delayed DDPG) cuya codificación ha sido implementada como parte de la culminación del curso https://www.udemy.com/course/aprendizaje-por-refuerzo-profundo/ cuyas referencias oficiales son: 
+El aprendizaje de los agentes se ha logrado mediante el Modelo TD3 (Twin delayed DDPG) cuya codificación ha sido implementada como parte de la culminación del curso https://www.udemy.com/course/aprendizaje-por-refuerzo-profundo/ cuyas referencias oficiales son: 
 1. El repositorio oficial del equipo creador del Modelo TD3 https://github.com/sfujim/TD3
 2. El Articulo oficial https://arxiv.org/abs/1802.09477. 
 
