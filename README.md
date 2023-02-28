@@ -15,6 +15,12 @@ Además de ello, se ha hecho una comparativa de desempeño en entrenamiento de T
 
 https://user-images.githubusercontent.com/30361234/208005553-9cb6a1f3-f142-403e-b957-4182b9c3076e.mp4
 
+### Analisis de Entorno:
+En este proyecto se modelo un Entorno parcialmente observable por los agentes, donde en cada instante de tiempo, los agentes podian solo registrar los datos observación mostrados en la siguiente imagen, además se adjunta las acciones que pueden ejecutar los agentes. 
+
+![observacion(1)](https://user-images.githubusercontent.com/30361234/221737585-acf74b14-bf5e-4b0c-af71-4deba00881d2.png)
+
+
 ### Controles en Pybullet:
 Es importante que al momento de interactuar con el entorno pybullet, podamos rotar, desplazarnos y manipular los objetos, por ello adjunto una pequeña guía de los mas importantes controles de teclado y mouse disponible:
 
