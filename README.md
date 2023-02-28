@@ -3,7 +3,7 @@
 
 ```diff
 
-+ 🤖 Deep Reinforcement Learning 🤖 Modelos Actor-Crítico 🤖 DDPG 🤖 TD3 🤖
++ Deep Reinforcement Learning | + Actor-Crític Models | + DDPG | + TD3 | + PyBullet | + Scara | 
 ```
 
 Este proyecto tuvo como objetivo crear un entorno de Gimnasio en pybullet desde cero con la finalidad de entrenar dos agentes y enseñarles a jugar Air Hockey, los agentes robóticos son scaras de 2 grados de libertad que poseen un mazo en su efector final. 
