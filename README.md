@@ -1,4 +1,6 @@
-# Proyecto AIR HOCKEY en PyBullet
+
+
+# ✨ Proyecto AIR HOCKEY en PyBullet ✨
 
 Este proyecto tuvo como objetivo crear un entorno de Gimnasio en pybullet desde cero con la finalidad de entrenar dos agentes y enseñarles a jugar Air Hockey, los agentes robóticos son scaras de 2 grados de libertad que poseen un mazo en su efector final. 
 Puede usted ver una demostración completa dando **Ctrl + click** al siguiente icono: 
@@ -15,23 +17,24 @@ Además de ello, se ha hecho una comparativa de desempeño en entrenamiento de T
 
 https://user-images.githubusercontent.com/30361234/208005553-9cb6a1f3-f142-403e-b957-4182b9c3076e.mp4
 
-### Analisis de Entorno:
+### <ins>Analisis de Entorno:</ins>
 En este proyecto se modelo un Entorno parcialmente observable por los agentes, donde en cada instante de tiempo, los agentes podian solo registrar los datos observación mostrados en la siguiente imagen, además se adjunta las acciones que pueden ejecutar los agentes. 
 
 ![observacion(1)](https://user-images.githubusercontent.com/30361234/221737585-acf74b14-bf5e-4b0c-af71-4deba00881d2.png)
 
 
-### Controles en Pybullet:
+### <ins>Controles en Pybullet:</ins>
 Es importante que al momento de interactuar con el entorno pybullet, podamos rotar, desplazarnos y manipular los objetos, por ello adjunto una pequeña guía de los mas importantes controles de teclado y mouse disponible:
 
 - **Scroll Mouse hacia abajo/arriba:** Zoom In/out de la escena.
 - **Ctrl + keep Click + Desplazar mouse:** Rotación de la escena.
 - **Ctrl + Mouse Left + Mouse Right + Desplazar mouse:** Movimiento paralelo en la escena.
 - **Tecla G:** Retira o muestra las ventanas de Depuración.
+- **Tecla Q:** Cambia a vista de Objetos de Colisión.
 - **Keep Click + Desplazar mouse:** Manipula y mueve objetos.
 
 
-### Instrucciones de Uso:
+## Instrucciones de Uso:
  
 ### <ins>EN COLAB</ins>
 Los procesos de entrenamiento y procesamiento de videos se harán en colab para no repercutir en gastos computacionales de nuestra maquina local, por lo que se ha preparado un cuaderno, el cual puede usted acceder dando **Ctrl + click** en el siguiente icono:
@@ -123,7 +126,7 @@ python3 demo.py
 https://user-images.githubusercontent.com/30361234/208754050-1c7c75ca-9b21-420a-b6f8-21ddcff7ee80.mp4
 
 
-### Métricas de Entrenamiento:
+## Métricas de Entrenamiento:
 
 ##### 4. Para observar las métricas resultantes del entrenamiento, se ha preparado un gráfico para cada robot scara, donde se muestra el progreso en una ventana de 100 episodios, para ver escribir en consola:
 ##### Para visualizar métrica de la scara derecha:
