@@ -15,7 +15,7 @@ El aprendizaje de los agentes se ha logrado mediante el Modelo TD3 (Twin delayed
 1. El repositorio oficial del equipo creador del Modelo TD3 https://github.com/sfujim/TD3
 2. El Articulo oficial https://arxiv.org/abs/1802.09477. 
 
-Además de ello, se ha hecho una comparativa de desempeño en entrenamiento de TD3 versus DDPG (Modelo predecesor de TD3 cuyo Articulo se puede visualizar en https://arxiv.org/abs/1509.02971), la comparativa realizada para este entorno se observa al final de esta redacción.
+Además de ello, al final de este documento se visualiza una comparativa de desempeño en entrenamiento de TD3 versus DDPG (Modelo base del cual TD3 se encarga de mejorar, el modelo DDPG se puede visualizar en https://arxiv.org/abs/1509.02971), la comparativa muestra una mejora al usar TD3 en el entorno Air Hockey.
 
 
 
