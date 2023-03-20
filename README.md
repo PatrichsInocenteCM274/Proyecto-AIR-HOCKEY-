@@ -17,17 +17,17 @@ El aprendizaje de los agentes se ha logrado mediante el Modelo TD3 (Twin delayed
 
 Además de ello, al final de este documento se visualiza una comparativa de desempeño en entrenamiento de TD3 versus DDPG (Modelo base del cual TD3 se encarga de mejorar, el modelo DDPG se puede visualizar en https://arxiv.org/abs/1509.02971), la comparativa muestra una mejora al usar TD3 en el entorno Air Hockey.
 
-
+### <ins>Entorno Air Hockey</ins>
 
 https://user-images.githubusercontent.com/30361234/208005553-9cb6a1f3-f142-403e-b957-4182b9c3076e.mp4
 
-### <ins>Analisis de Entorno:</ins>
+### <ins>Analisis de Entorno</ins>
 En este proyecto se modelo un Entorno parcialmente observable por los agentes, donde en cada instante de tiempo, los agentes registrarán los datos de observación mostrados en la siguiente imagen, además se adjunta las acciones disponibles a ejecutar por cada agente. 
 
 ![observacion(1)](https://user-images.githubusercontent.com/30361234/221737585-acf74b14-bf5e-4b0c-af71-4deba00881d2.png)
 
 
-### <ins>Controles en Pybullet:</ins>
+### <ins>Controles en Pybullet</ins>
 Es importante que al momento de interactuar con el entorno pybullet, podamos rotar, desplazarnos y manipular los objetos, por ello adjunto una pequeña guía de los mas importantes controles de teclado y mouse disponible:
 
 - **Scroll Mouse hacia abajo/arriba:** Zoom In/out de la escena.
